@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Game Object Test</title>
+    <title>Connect</title>
     <link rel="stylesheet" href="./assets/css/style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3.0, minimum-scale=1">
     <script src="./assets/js/game-board.js"></script>
@@ -32,6 +32,17 @@
         </div>
         <div class="container settings-card">
           <label class="container setting">
+            <span>Player Count</span>
+            <br>
+            <select id="playerCount" class="setting">
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+            </select>
+          </label>
+          <label class="container setting">
             <span>Grid Size:</span>
             <br>
             <span>X</span>
@@ -40,26 +51,28 @@
             <span>Y</span>
             <input type="number" id="gridSizeY" class="setting">
           </label>
-          <label>
+          <label class="container setting">
             <span>Win Condition:</span>
             <br>
             <input type="number" id="winCondition" class="setting">
             <span>in a row</span>
           </label>
-          <label>
+          <label class="container setting">
             <span>Time Limit:</span>
             <br>
             <input type="number" id="timeLimit" class="setting">
             <span>(seconds)</span>
           </label>
-          <button></button>
+          <button id="settingsButton">Apply Settings</button>
+          <button id="boardResetButton">Reset Board</button>
+          <button id="closeSelectModalButton">Close Window</button>
         </div>
       </div>
     </div>
-    <!-- START DYNAMICALLY POPULATED ELEMENTS -->
+    <!-- DYNAMICALLY POPULATED ELEMENT(S) -->
     <aside></aside>
     <main></main>
-    <!-- END DYNAMICALLY POPULATED ELEMENTS -->
+    <!-- SCRIPT(S) -->
     <script src="./assets/js/main.js"></script>
   </body>
 </html>
