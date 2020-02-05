@@ -1,5 +1,5 @@
 class GameBoard {
-  constructor(gridX = 7, gridY = 6, piecesToWin = 4, players = 2) {
+  constructor(gridX = 7, gridY = 6, piecesToWin = 4, players = 2, timeLimit = 0) {
     const main = document.querySelector("main");
 
     this.players = players;
@@ -18,7 +18,7 @@ class GameBoard {
     this.element.classList.add("container", "game-board");
     this.element.addEventListener("click", e => this.onClick(e));
     this.initializeBoard(gridX, gridY);
-    this.scoreboard = new Scoreboard(this, players);
+    this.scoreboard = new Scoreboard(this, players, timeLimit);
   }
 
   initializeBoard(gridX, gridY) {

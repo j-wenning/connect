@@ -1,5 +1,5 @@
 class Scoreboard {
-  constructor(gameBoard, players, timeLimit = 0) {
+  constructor(gameBoard, players, timeLimit) {
     const aside = document.querySelector("aside");
 
     this.scores = [];

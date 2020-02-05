@@ -43,6 +43,15 @@ button {
   align-items: center;
 }
 
+.settings-card {
+  display: flex;
+  flex-direction: column;
+}
+
+input {
+  width: 10%;
+}
+
 /* scoreboard css */
 aside {
   z-index: -1;
