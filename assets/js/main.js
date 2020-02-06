@@ -10,9 +10,22 @@ class GameManager{
     this.gameBoard = new GameBoard();
     this.settingsButton = document.getElementById("settingsButton");
     this.boardResetButton = document.getElementById("boardResetButton");
+    this.closeSelectionButton = document.getElementById("closeSelectModalButton");
+    this.selectionModal = document.querySelector(".container.modal.select");
     this.settingsButton.addEventListener("click", e=>this.newBoardCallback(e));
-    this.boardResetButton.addEventListener("click", e=>this.clearBoard(e));
+    this.boardResetButton.addEventListener("click", e=>this.clearBoardCallback(e));
+    this.closeSelectionButton.addEventListener("click", e=>this.toggleSelectionModalCallback(e));
   }
+
+  toggleSelectionModalCallback(e) {
+    return this.toggleSelectionModal();
+  }
+
+  toggleSelectionModal() {
+    this.gameBoard.scoreboard.togglePause();
+    return this.selectionModal.classList.toggle("hidden");
+  }
+
   clearBoardCallback(e){
     return this.clearBoard()
   }

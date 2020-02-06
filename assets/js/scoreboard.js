@@ -1,3 +1,5 @@
+const TIME_OFFSET = 25; // centiseconds
+
 class Scoreboard {
   constructor(gameBoard, players, timeLimit) {
     const aside = document.querySelector("aside");
@@ -32,9 +34,9 @@ class Scoreboard {
   updateTime() {
     const time = this.element.querySelector(".time span");
     const s = Math.floor(this.currentTime / 100);
-    const ms = (this.currentTime % 100).toString().padStart(2, "0");
+    const cs = (this.currentTime % 100).toString().padStart(2, "0");
 
-    time.textContent = `${Math.floor(s)}.${ms}s`;
+    time.textContent = `${Math.floor(s)}.${cs}s`;
   }
 
   updateSlot() {
@@ -77,7 +79,7 @@ class Scoreboard {
   }
 
   setTimeLimit(time) {
-    this.timeLimit = time * 100;
+    this.timeLimit = time * 100 + TIME_OFFSET;
     this.resetTime();
     return this.timeLimit;
   }
@@ -87,14 +89,15 @@ class Scoreboard {
   }
 
   decrementTime() {
-    if (!this.paused && this.timeLimit > 0) {
+    if (!this.paused && this.timeLimit > TIME_OFFSET) {
       --this.currentTime;
-      if (this.currentTime < 0) {
+      if (this.currentTime >= 0)
+        this.updateTime();
+      if (this.currentTime < -TIME_OFFSET) {
         this.gameBoard.incrementPlayer("current");
         this.resetTime();
       }
     }
-    this.updateTime();
     return this.currentTime;
   }
 }

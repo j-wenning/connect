@@ -144,3 +144,8 @@ main {
 .peppy-piece {
   background-color: orange;
 }
+
+/* prioritized css */
+.hidden {
+  display: none;
+}

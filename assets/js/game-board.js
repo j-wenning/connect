@@ -101,8 +101,11 @@ class GameBoard {
     if (target.classList.contains("slot"))
       target = target.parentElement;
     if (target.classList.contains("cell"))
-      if (this.pushToSlot(target, this.currentPlayer))
+      if (this.pushToSlot(target, this.currentPlayer)) {
         this.incrementPlayer("current");
+        this.scoreboard.resetTime();
+      }
+
   }
 
   checkStalemate() {
