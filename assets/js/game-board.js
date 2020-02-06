@@ -1,10 +1,10 @@
 class GameBoard {
-  constructor(gridX = 7, gridY = 6, piecesToWin = 4, players = 2) {
+  constructor(gridX = 7, gridY = 6, winCondition = 4, players = 2, timeLimit = 0) {
     const main = document.querySelector("main");
 
-    this.players = players;
+    this.players = players ? players : 2;
     this.resetCurrentPlayer();
-    this.piecesToWin = piecesToWin;
+    this.winCondition = winCondition ? winCondition : 4;
     this.pieces = [
       "fox-piece",
       "falco-piece",
@@ -17,8 +17,12 @@ class GameBoard {
     this.element = main.appendChild(document.createElement("div"));
     this.element.classList.add("container", "game-board");
     this.element.addEventListener("click", e => this.onClick(e));
-    this.initializeBoard(gridX, gridY);
-    this.scoreboard = new Scoreboard(this, players);
+    this.initializeBoard(gridX ? gridX : 7, gridY ? gridY : 6);
+    this.createScoreBoard(players, timeLimit);
+  }
+
+  resetBoard() {
+    this.initializeBoard(this.gridX, this.gridY);
   }
 
   initializeBoard(gridX, gridY) {
@@ -56,8 +60,8 @@ class GameBoard {
 
   // misc handlers
 
-  createScoreBoard(players, timeLimit) {
-    this.scoreboard = new Scoreboard(players, timeLimit);
+  createScoreBoard(players = this.players, timeLimit = 0) {
+    this.scoreboard = new Scoreboard(this, players, timeLimit);
   }
 
   resetCurrentPlayer() {
@@ -88,7 +92,9 @@ class GameBoard {
       ++this.scoreboard.scores[this.currentPlayer];
     }
     else console.log("Game over.");
+    this.scoreboard.togglePause(true);
     this.scoreboard.updateScore();
+    this.scoreboard.resetTime();
   }
 
   // element handlers
@@ -97,8 +103,11 @@ class GameBoard {
     if (target.classList.contains("slot"))
       target = target.parentElement;
     if (target.classList.contains("cell"))
-      if (this.pushToSlot(target, this.currentPlayer))
+      if (this.pushToSlot(target, this.currentPlayer)) {
         this.incrementPlayer("current");
+        this.scoreboard.resetTime();
+      }
+
   }
 
   checkStalemate() {
@@ -189,7 +198,7 @@ class GameBoard {
     count += this.checkDirectionAt(x, y, -1, 0);  // left
     count += this.checkDirectionAt(x, y, 1, 0);   // right
     compareAndReset();
-    return highestCount >= this.piecesToWin;
+    return highestCount >= this.winCondition;
   }
 
   isValidAt(x, y) {
