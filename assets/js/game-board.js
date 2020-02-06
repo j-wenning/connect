@@ -92,7 +92,9 @@ class GameBoard {
       ++this.scoreboard.scores[this.currentPlayer];
     }
     else console.log("Game over.");
+    this.scoreboard.togglePause(true);
     this.scoreboard.updateScore();
+    this.scoreboard.resetTime();
   }
 
   // element handlers
