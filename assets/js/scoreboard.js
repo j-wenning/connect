@@ -4,22 +4,23 @@ class Scoreboard {
   constructor(gameBoard, players, timeLimit) {
     const aside = document.querySelector("aside");
 
+    this.gameBoard = gameBoard;
     this.scores = [];
     this.players = [];
     this.scores.length = players;
     this.scores = this.scores.fill(0);
     this.paused = true;
-    clearHTML(aside);
+    this.timeActive = false;
     for (let player = 0; player < players; ++player)
       this.players.push(`Player ${player + 1}`);
-    this.setTimeLimit(timeLimit);
     setInterval(() => this.decrementTime(), 10);
-    this.gameBoard = gameBoard;
+    clearHTML(aside);
     this.element = aside.appendChild(document.createElement("div"));
     this.element.classList.add("container", "scoreboard");
     this.initializeBoard();
     this.updateSlot();
     this.updateScore();
+    this.setTimeLimit(timeLimit);
   }
 
   updateScore() {
@@ -79,8 +80,18 @@ class Scoreboard {
   }
 
   setTimeLimit(time) {
+    const timeParent = this.element.querySelector(".time").parentElement.classList;
     this.timeLimit = time * 100 + TIME_OFFSET;
     this.resetTime();
+    this.timeActive = true;
+    if (timeParent.contains("hidden"))
+      timeParent.remove("hidden");
+    if(this.timeLimit <= TIME_OFFSET) {
+      this.timeActive = false;
+      if (!timeParent.contains("hidden"))
+        timeParent.add("hidden");
+    }
+
     return this.timeLimit;
   }
 
@@ -89,7 +100,7 @@ class Scoreboard {
   }
 
   decrementTime() {
-    if (!this.paused && this.timeLimit > TIME_OFFSET) {
+    if (this.timeActive && !this.paused && this.timeLimit > TIME_OFFSET) {
       --this.currentTime;
       if (this.currentTime >= 0)
         this.updateTime();
