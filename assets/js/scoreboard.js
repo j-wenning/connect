@@ -1,6 +1,5 @@
 class Scoreboard {
-  constructor(players, playerCount) {
-    this.players = players;
+  constructor(playerCount) {
     this.scores = []
     this.scores.length = playerCount;
     this.scores.fill(0);
@@ -29,7 +28,7 @@ class Scoreboard {
       .classList.add("name");
     score.appendChild(document.createElement("p"))
       .classList.add("score");
-    score.firstElementChild.textContent = `P${this.players[player]}`;
+    score.firstElementChild.textContent = `${PLAYERS[player]}`;
     score.lastElementChild.textContent = this.scores[player];
     return score;
   }

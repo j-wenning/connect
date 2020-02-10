@@ -10,10 +10,7 @@ class GameManager {
     this.currentPlayer = null;
     this.tokens = null;
     this.setBoardData(6, 7, 4);
-    this.setTokens()
-    this.tokens = TOKENS.slice(players.length);
     this.time = this.timeLimit = 0;
-    this.players = [1, 2, 3, 4, 5, 6];
     this.setPlayerCount(2)
     this.reset();
     this.paused = true;
@@ -26,14 +23,14 @@ class GameManager {
   createGameBoard() {
     this.gameBoard = new GameBoard(
       this.boardY, this.boardX,
-      this.tokensTaken,
+      this.tokens,
       this.incrementPlayer, this.currentPlayer,
       this.winCondition, this.winSequence);
     this.gameBoard.displayGrid();
   }
 
   createScoreboard() {
-    this.scoreboard = new Scoreboard(this.players, this.playerCount);
+    this.scoreboard = new Scoreboard(this.playerCount);
   }
 
   toggleWinModal(stalemate) {
@@ -43,7 +40,7 @@ class GameManager {
     if(stalemate)
       p.textContent = "GAME OVER";
     else
-      p.textContent = `Player ${this.players[this.currentPlayer]} wins!`;
+      p.textContent = `${PLAYERS[this.currentPlayer]} wins!`;
   }
 
   toggleSelectModal() {
@@ -64,6 +61,10 @@ class GameManager {
       this.reset();
       this.toggleWinModal();
     }
+  }
+
+  resetTokens() {
+    this.tokens = TOKENS.slice(this.playerCount);
   }
 
   restart() {
@@ -104,8 +105,7 @@ class GameManager {
   }
 
   setPlayerCount(count) {
-    this.tokensTaken = this.tokens.slice(0, count);
-    this.tokensAvail = this.tokens.slice(count);
+    this.resetTokens();
     this.playerCount = count;
   }
 
@@ -135,7 +135,7 @@ class GameManager {
 
   incrementPlayer() {
     this.currentPlayer = (this.currentPlayer + 1) % this.playerCount;
-    this.scoreboard.setToken(this.tokensTaken[this.currentPlayer]);
+    this.scoreboard.setToken(this.tokens[this.currentPlayer]);
   }
 
   winSequence(stalemate) {
