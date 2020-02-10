@@ -8,10 +8,13 @@ class GameManager {
     this.boardY = null;
     this.winCondition = null;
     this.currentPlayer = null;
+    this.currentPicking = null;
+    this.playerCount = null;
     this.tokens = null;
     this.setBoardData(6, 7, 4);
     this.time = this.timeLimit = 0;
-    this.setPlayerCount(2)
+    this.setPlayerCount(2);
+    this.createSelectModal();
     this.reset();
     this.paused = true;
     this.timeActive = false;
@@ -33,6 +36,21 @@ class GameManager {
     this.scoreboard = new Scoreboard(this.playerCount);
   }
 
+  createSelectModal() {
+    const board = document.querySelector("#selectModal .row .col");
+    let element;
+
+    board.innerHTML = "";
+    for(let i = 0; i < TOKENS.length; ++i) {
+      element = board.appendChild(document.createElement("button"));
+      element.classList.add("select", "token", TOKENS[i]);
+      element.setAttribute("data-selected", i < this.playerCount ? i + 1 : EMPTY);
+      element.appendChild(document.createElement("span"));
+      if(i < this.playerCount)
+        element.firstElementChild.textContent = `P${i + 1}`;
+    }
+  }
+
   toggleWinModal(stalemate) {
     const modal = document.querySelector("#winModal");
     const p = modal.querySelector("p");
@@ -44,20 +62,23 @@ class GameManager {
   }
 
   toggleSelectModal() {
+    this.currentPicking = 0;
     document.querySelector("#selectModal").classList.toggle("hidden");
   }
 
   onClick(e) {
     const target = e.target;
 
-    if(target.classList.contains("token"))
+    if(target.classList.contains("select"))
+      ;
+    else if(target.classList.contains("token"))
       this.gameBoard.placeToken(
         Number(target.getAttribute("data-x")), this.currentPlayer);
-    if(target === document.querySelector("#resetButton")) {
+    else if(target === document.querySelector("#resetButton")) {
       this.restart();
       this.toggleWinModal();
     }
-    if (target === document.querySelector("#restartButton")) {
+    else if (target === document.querySelector("#restartButton")) {
       this.reset();
       this.toggleWinModal();
     }
@@ -70,7 +91,7 @@ class GameManager {
   restart() {
     this.currentPlayer = -1;
     this.createGameBoard();
-    this.incrementPlayer();
+    this.incrementPlayer("current");
   }
 
   reset() {
@@ -104,9 +125,14 @@ class GameManager {
     this.winCondition = winCondition;
   }
 
+  selectToken() {
+
+  }
+
   setPlayerCount(count) {
     this.resetTokens();
     this.playerCount = count;
+    this.createSelectModal();
   }
 
   resetTime() {
@@ -128,14 +154,23 @@ class GameManager {
         --this.time;
       else {
         this.time = this.timeLimit;
-        this.incrementPlayer();
+        this.incrementPlayer("current");
       }
     this.scoreboard.displayTime(this.time, this.timeLimit, this.timeActive);
   }
 
-  incrementPlayer() {
-    this.currentPlayer = (this.currentPlayer + 1) % this.playerCount;
-    this.scoreboard.setToken(this.tokens[this.currentPlayer]);
+  incrementPlayer(player) {
+    switch(player) {
+      case "current":
+        this.currentPlayer = (this.currentPlayer + 1) % this.playerCount;
+        this.scoreboard.setToken(this.tokens[this.currentPlayer]);
+      break;
+      case "picking":
+        this.currentPicking = (this.currentPicking + 1) % this.playerCount;
+
+      break;
+    }
+
   }
 
   winSequence(stalemate) {

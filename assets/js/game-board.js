@@ -31,7 +31,7 @@ class GameBoard {
           this.winSequence();
         else if (this.checkStale())
           this.winSequence(true);
-        this.incrementPlayer();
+        this.incrementPlayer("current");
         return true;
       }
       ++y;
