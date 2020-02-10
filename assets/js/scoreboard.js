@@ -1,116 +1,65 @@
-const TIME_OFFSET = 30; // centiseconds
-
 class Scoreboard {
-  constructor(gameBoard, players, timeLimit) {
-    const aside = document.querySelector("aside");
-
-    this.gameBoard = gameBoard;
-    this.scores = [];
-    this.players = [];
-    this.scores.length = players;
-    this.scores = this.scores.fill(0);
-    this.paused = true;
-    this.timeActive = false;
-    for (let player = 0; player < players; ++player)
-      this.players.push(`Player ${player + 1}`);
-    setInterval(() => this.decrementTime(), 10);
-    clearHTML(aside);
-    this.element = aside.appendChild(document.createElement("div"));
-    this.element.classList.add("container", "scoreboard");
-    this.initializeBoard();
-    this.updateSlot();
-    this.updateScore();
-    this.setTimeLimit(timeLimit);
+  constructor(players, playerCount) {
+    this.players = players;
+    this.scores = []
+    this.scores.length = playerCount;
+    this.scores.fill(0);
+    this.displayScores();
+    this.createTime();
   }
 
-  updateScore() {
-    let currentPlayer = this.element.querySelector(".player-card .player-info");
-    for (let player = 0; player < this.players.length; ++player) {
-      currentPlayer.firstElementChild.textContent = this.players[player];
-      currentPlayer.lastElementChild.textContent = this.scores[player];
-      currentPlayer = currentPlayer.nextElementSibling;
-    }
+  incrementScore(player) {
+    ++this.scores[player];
+    this.displayScores();
   }
 
-  updateTime() {
-    const time = this.element.querySelector(".time span");
-    const s = Math.floor(this.currentTime / 100);
-    const cs = this.currentTime < this.timeLimit - TIME_OFFSET  ? this.currentTime % 100 : 0;
+  displayScores() {
+    const board = document.querySelector("#scoreBoardTop .col")
 
-    time.textContent = `${Math.floor(s)}.${cs.toString().padStart(2, "0")}s`;
+    board.innerHTML = "";
+    for(let i = 0; i < this.scores.length; ++i)
+      board.appendChild(this.createScore(i));
   }
 
-  updateSlot() {
-    const slot = this.element.querySelector(".slot");
-    slot.classList.replace(slot.classList.item(1), this.gameBoard.pieces[this.gameBoard.currentPlayer]);
+  createScore(player) {
+    const score = document.createElement("div");
+
+    score.classList.add("player");
+    score.appendChild(document.createElement("p"))
+      .classList.add("name");
+    score.appendChild(document.createElement("p"))
+      .classList.add("score");
+    score.firstElementChild.textContent = `P${this.players[player]}`;
+    score.lastElementChild.textContent = this.scores[player];
+    return score;
   }
 
-  initializeBoard() {
-    let currentElement;
+  setToken(name) {
+    const token = document.querySelector("#token");
 
-    clearHTML(this.element);
-    currentElement = this.element.appendChild(document.createElement("div"));
-    currentElement.classList.add("container", "player-card");
-    for (let player = 0; player < this.players.length; ++player) {
-      currentElement = currentElement.appendChild(document.createElement("div"));
-      currentElement.classList.add("container", "player-info");
-      currentElement.appendChild(document.createElement("span")).classList.add("player");
-      currentElement.appendChild(document.createElement("span")).classList.add("score");
-      currentElement = currentElement.parentElement;
-    }
-    currentElement = this.element.appendChild(document.createElement("div"));
-    currentElement.classList.add("container", "turn-card");
-    currentElement = currentElement.appendChild(document.createElement("div"));
-    currentElement.classList.add("container", "turn-item")
-    currentElement.appendChild(document.createElement("div")).classList.add("slot", "empty");
-    currentElement = currentElement.parentElement;
-    currentElement = currentElement.appendChild(document.createElement("div"));
-    currentElement.classList.add("container", "turn-item")
-    currentElement = currentElement.appendChild(document.createElement("div"));
-    currentElement.classList.add("time");
-    currentElement.appendChild(document.createElement("span"));
+    token.classList.replace(token.classList.item(1), name);
   }
 
-  incrementScore(player = this.gameBoard.currentPlayer) {
-    return ++this.scores[player];
+  displayTime(time, timeLimit, timeActive) {
+    const span = document.querySelector("#time");
+
+    if(timeActive) {
+      span.parentElement.classList.remove("hidden");
+      if(time >= 0 && time <= timeLimit - TIME_OFFSET)
+        span.textContent = time;
+    } else span.parentElement.classList.add("hidden");
   }
 
-  togglePause(force) {
-    return this.paused = force ? force : !this.paused;
-  }
+  createTime() {
+    const board = document.querySelector("#scoreBoardBot .col")
 
-  setTimeLimit(time) {
-    const timeParent = this.element.querySelector(".time").parentElement.classList;
-    this.timeLimit = time * 100 + TIME_OFFSET;
-    this.resetTime();
-    this.timeActive = true;
-    if (timeParent.contains("hidden"))
-      timeParent.remove("hidden");
-    if(this.timeLimit <= TIME_OFFSET) {
-      this.timeActive = false;
-      if (!timeParent.contains("hidden"))
-        timeParent.add("hidden");
-    }
-
-    return this.timeLimit;
-  }
-
-  resetTime() {
-    this.currentTime = this.timeLimit;
-    this.updateTime();
-    return this.currentTime;
-  }
-
-  decrementTime() {
-    if (this.timeActive && !this.paused && this.timeLimit > TIME_OFFSET) {
-      --this.currentTime;
-      if (this.currentTime >= 0)
-        this.updateTime();
-      if (this.currentTime < -TIME_OFFSET) {
-        this.gameBoard.incrementPlayer("current");
-        this.resetTime();
-      }
-    }
-    return this.currentTime;
+    board.innerHTML = "";
+    board.appendChild(document.createElement("div"))
+      .setAttribute("id", "token");
+    board.appendChild(document.createElement("div"))
+      .appendChild(document.createElement("span"))
+      .setAttribute("id", "time");
+    board.firstElementChild.classList.add("token", "empty");
+    board.lastElementChild.classList.add("timer");
   }
 }

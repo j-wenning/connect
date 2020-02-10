@@ -1,246 +1,128 @@
 class GameBoard {
-  constructor(gridX = 7, gridY = 6, winCondition = 4, players = 2, timeLimit = 0) {
-    const main = document.querySelector("main");
-
-    this.players = players ? players : 2;
-    this.resetCurrentPlayer();
-    this.winCondition = winCondition ? winCondition : 4;
-    this.pieces = [
-      "fox-piece",
-      "falco-piece",
-      "slippy-piece",
-      "krystal-piece",
-      "andross-piece",
-      "peppy-piece"
-    ];
-    clearHTML(main);
-    this.element = main.appendChild(document.createElement("div"));
-    this.element.classList.add("container", "game-board");
-    this.element.addEventListener("click", e => this.onClick(e));
-    this.initializeBoard(gridX ? gridX : 7, gridY ? gridY : 6);
-    this.createScoreBoard(players, timeLimit);
+  constructor(boardY, boardX, tokens, incrementPlayer, currentPlayer, winCondition, winSequence) {
+    this.boardY = boardY;
+    this.boardX = boardX;
+    this.tokens = tokens;
+    this.incrementPlayer = incrementPlayer;
+    this.currentPlayer = currentPlayer;
+    this.winCondition = winCondition;
+    this.winSequence = winSequence;
+    this.grid = this.createGrid(boardY, boardX);
   }
 
-  resetBoard() {
-    this.initializeBoard(this.gridX, this.gridY);
-  }
+  // GAME LOGIC
+  createGrid(boardY, boardX) {
+    let grid = [];
 
-  initializeBoard(gridX, gridY) {
-    let currentElement = this.element;
-
-    clearHTML(currentElement);
-    this.resetCurrentPlayer();
-    this.grid = [];
-    this.gridX = gridX;
-    this.gridY = gridY;
-    // currentElement.setAttribute("style", `width: ${ 100 * gridY / gridX }%`);
-    for (let y = 0; y < gridY; ++y) {
-      this.grid.push([]);
-      for (let x = 0; x < gridX; ++x) {
-        currentElement = document.createElement("div");
-        this.grid[y].push(currentElement);
-        currentElement.classList.add("container", "cell");
-        currentElement.setAttribute("style",
-          `flex-basis: ${100 / gridX}%;`
-          + `height: ${100 / gridY}%;`
-        );
-        currentElement.setAttribute("data-col", x);
-        currentElement.setAttribute("data-row", y);
-        currentElement = currentElement.appendChild(document.createElement("div"));
-        currentElement.classList.add("slot", "empty");
-        currentElement.setAttribute("value", EMPTY);
-      }
+    for (let y = 0; y < boardY; ++y) {
+      grid.push([]);
+      for (let x = 0; x < boardX; ++x)
+        grid[y][x] = new Token(EMPTY, x, boardY, boardX);
     }
-
-    // ensure grid builds with row number descending
-    for (let y = gridY - 1; y >= 0; --y)
-      for (let x = 0; x < gridX; ++x)
-        this.element.appendChild(this.grid[y][x]);
+    return grid;
   }
 
-  // misc handlers
-
-  createScoreBoard(players = this.players, timeLimit = 0) {
-    this.scoreboard = new Scoreboard(this, players, timeLimit);
-  }
-
-  resetCurrentPlayer() {
-    this.currentPlayer = 0;
-  }
-
-  incrementPlayer(player) {
-    let incremented;
-
-    switch (player) {
-      case "current":
-        this.currentPlayer = (this.currentPlayer + 1) % this.players;
-        incremented = this.currentPlayer;
-        this.scoreboard.updateSlot();
-        break;
-      default:
-        incremented = null;
-        break;
-    }
-    return incremented;
-  }
-
-  win() {
-    // open modal with reset (this.initializeBoard(this.gridX, this.gridY))
-    // otherwise onclick acts too quickly and wont reset current player
-    if (this.currentPlayer !== NON_PLAYER) {
-      console.log(`Player ${this.currentPlayer + 1} wins`);
-      ++this.scoreboard.scores[this.currentPlayer];
-    }
-    else console.log("Game over.");
-    this.scoreboard.togglePause(true);
-    this.scoreboard.updateScore();
-    this.scoreboard.resetTime();
-  }
-
-  // element handlers
-  onClick(e) {
-    let target = e.target;
-    if (target.classList.contains("slot"))
-      target = target.parentElement;
-    if (target.classList.contains("cell"))
-      if (this.pushToSlot(target, this.currentPlayer)) {
-        this.incrementPlayer("current");
-        this.scoreboard.resetTime();
-      }
-
-  }
-
-  checkStalemate() {
-    let x = 0;
-    while (this.isValidAt(x, this.gridY - 1)) {
-      if (this.getSlotValueAt(x, this.gridY - 1) === EMPTY)
-        return false;
-      ++x;
-    }
-    return true;
-  }
-
-  checkWin(target) {
-    return this.checkWinAt(this.getCellX(target), this.getCellY(target));
-  }
-
-  pushToSlot(target, value) {
-    return this.pushToSlotAt(this.getCellX(target), value);
-  }
-
-  setSlot(target, value, force = false) {
-    return this.setSlotAt(this.getCellX(target), this.getCellY(target), value, force);
-  }
-
-  updateSlot(slot) {
-    return slot.classList.replace(slot.classList.item(1), this.pieces[Number(slot.getAttribute("value"))]);
-  }
-
-  getCellY(cell) {
-    return Number(cell.getAttribute("data-row"));
-  }
-
-  getCellX(cell) {
-    return Number(cell.getAttribute("data-col"));
-  }
-
-  // grid handlers
-  refreshSlots() {
-    for (let y = 0; y < this.gridY; ++y)
-      for (let x = 0; x < this.gridX; ++x)
-        this.updateSlot(this.getSlotAt(x, y));
-  }
-
-  pushToSlotAt(x, value) {
+  placeToken(x, val) {
     let y = 0;
-    while (this.isValidAt(x, y)) {
-      if (this.setSlotAt(x, y, value)) {
-        if (this.checkWinAt(x, y))
-          this.win();
+
+    while (this.checkAt(y, x)) {
+      if (this.updateToken(y, x, val)) {
+        if(this.checkAdj(y, x))
+          this.winSequence();
+        else if (this.checkStale())
+          this.winSequence(true);
+        this.incrementPlayer();
         return true;
       }
       ++y;
     }
+
     return false;
   }
 
-  checkWinAt(x, y) {
-    if(this.checkAdjacent(x, y))
-      return true;
-    else if (this.checkStalemate()) {
-      this.currentPlayer = NON_PLAYER;
-      return true;
-    }
-    return false;
+  checkAt(y, x) {
+    return y < this.boardY && x < this.boardX
+        && y >= 0 && x >=0;
   }
 
-  checkAdjacent(x, y) {
+  checkAdj(y, x) {
     let count = 1;
-    let highestCount = 1;
+    let highest = 1;
     function compareAndReset() {
-      if (count > highestCount)
-        highestCount = count;
+      if(count > highest) {
+        highest = count;
+      }
       count = 1;
     }
-    // negative slant
-    count += this.checkDirectionAt(x, y, -1, 1);  // left up
-    count += this.checkDirectionAt(x, y, 1, -1);  // right down
+    // pos (+) slant
+    count += this.checkDir(y, x, 1, -1);
+    count += this.checkDir(y, x, -1, 1);
     compareAndReset();
-    // horizontal
-    count += this.checkDirectionAt(x, y, 1, 1);   // right up
-    count += this.checkDirectionAt(x, y, -1, -1); // left down
-    compareAndReset();
-    // positive slant
-    count += this.checkDirectionAt(x, y, 0, 1);   // up
-    count += this.checkDirectionAt(x, y, 0, -1);  // down
+    // neg (-) slant
+    count += this.checkDir(y, x, 1, 1);
+    count += this.checkDir(y, x, -1, -1);
     compareAndReset();
     // vertical
-    count += this.checkDirectionAt(x, y, -1, 0);  // left
-    count += this.checkDirectionAt(x, y, 1, 0);   // right
+    count += this.checkDir(y, x, 1, 0);
+    count += this.checkDir(y, x, -1, 0);
     compareAndReset();
-    return highestCount >= this.winCondition;
+    // horizontal
+    count += this.checkDir(y, x, 0, -1);
+    count += this.checkDir(y, x, 0, 1);
+    compareAndReset();
+    return highest >= this.winCondition;
   }
 
-  isValidAt(x, y) {
-    return x >= 0 && x < this.gridX &&
-      y >= 0 && y < this.gridY;
-  }
-
-  checkDirectionAt(x1, y1, xDir, yDir) {
-    const x2 = x1 + xDir;
+  checkDir(y1, x1, yDir, xDir) {
     const y2 = y1 + yDir;
+    const x2 = x1 + xDir;
 
-    if (this.isValidAt(x1, y1) && this.isValidAt(x2, y2))
-      if (this.compareSlotsAt(x1, y1, x2, y2))
-        return 1 + this.checkDirectionAt(x2, y2, xDir, yDir);
+    if(this.checkAt(y2, x2))
+      if(this.grid[y1][x1].val === this.grid[y2][x2].val)
+        return 1 + this.checkDir(y2, x2, yDir, xDir);
     return 0;
   }
 
-  setSlotAt(x, y, value, force = false) {
-    const slot = this.getSlotAt(x, y);
+  checkStale() {
+    for(let x = 0; x < this.boardX; x++)
+      if(this.grid[this.boardY-1][x].val === EMPTY)
+        return false;
+    return true;
+  }
 
-    if (force || this.getSlotValueAt(x, y) === EMPTY) {
-      slot.setAttribute("value", value);
-      return this.updateSlot(slot);
+  // BOARD DISPLAY
+  changeTokens(tokens) {
+    this.tokens = tokens;
+    this.updateTokens();
+  }
+
+  displayGrid() {
+    const gameBoard = document.querySelector("#gameBoard .col");
+
+    gameBoard.innerHTML = "";
+    for(let y = this.boardY - 1; y >= 0; --y)
+      for(let x = 0; x < this.boardX; ++x)
+        gameBoard.appendChild(this.grid[y][x].elem);
+  }
+
+  updateToken(y, x, val) {
+    const token = this.grid[y][x];
+    let updated = false;
+
+    if (token.val === EMPTY) {
+      token.val = val;
+      updated = true;
     }
-    return false;
+    if (token.val !== EMPTY)
+      token.elem.classList.replace(
+                            token.elem.classList.item(1),
+                            this.tokens[token.val]);
+    return updated;
   }
 
-  compareSlotsAt(x1, y1, x2, y2) {
-    if (this.getSlotValueAt(x1, y1) !== EMPTY)
-      return this.getSlotValueAt(x1, y1) === this.getSlotValueAt(x2, y2);
-    return false;
-  }
-
-  getSlotValueAt(x, y) {
-    return Number(this.getSlotAt(x, y).getAttribute("value"));
-  }
-
-  getSlotAt(x, y) {
-    return this.getCellAt(x, y).firstElementChild;
-  }
-
-  getCellAt(x, y) {
-    return this.grid[y][x];
+  updateTokens() {
+    for(let y = 0; y < this.boardY; ++y)
+      for(let x = 0; x < this.boardX; ++x)
+        this.updateToken(y, x);
   }
 }

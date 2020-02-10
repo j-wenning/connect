@@ -3,76 +3,87 @@
   <head>
     <title>Connect</title>
     <link rel="stylesheet" href="./assets/css/style.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3.0, minimum-scale=1">
-    <script src="./assets/js/game-board.js"></script>
-    <script src="./assets/js/scoreboard.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=0.86, maximum-scale=3.0, minimum-scale=0.86">
   </head>
   <body>
-    <div class="container modal select">
-      <div class="container select-board">
-        <div class="container piece-card">
-          <button class="select">
-            <div class="slot fox-piece"></div>
-          </button>
-          <button class="select">
-            <div class="slot falco-piece"></div>
-          </button>
-          <button class="select">
-            <div class="slot slippy-piece"></div>
-          </button>
-          <button class="select">
-            <div class="slot krystal-piece"></div>
-          </button>
-          <button class="select">
-            <div class="slot andross-piece"></div>
-          </button>
-          <button class="select">
-            <div class="slot peppy-piece"></div>
-          </button>
+    <div class="container modal " id="selectModal">
+    <!-- <div class="container modal" id="selectModal"> -->
+      <div class="row">
+        <div class="col">
+          <button class="select"></button>
+          <button class="select"></button>
+          <button class="select"></button>
+          <button class="select"></button>
+          <button class="select"></button>
+          <button class="select"></button>
         </div>
-        <div class="container settings-card">
-          <label class="container setting">
-            <span>Player Count</span>
-            <br>
-            <select id="playerCount" class="setting">
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-            </select>
-          </label>
-          <label class="container setting">
-            <span>Grid Size:</span>
-            <br>
-            <span>X</span>
-            <input type="number" id="gridSizeX" class="setting">
-            <br>
-            <span>Y</span>
-            <input type="number" id="gridSizeY" class="setting">
-          </label>
-          <label class="container setting">
-            <span>Win Condition:</span>
-            <br>
-            <input type="number" id="winCondition" class="setting">
-            <span>in a row</span>
-          </label>
-          <label class="container setting">
-            <span>Time Limit:</span>
-            <br>
-            <input type="number" id="timeLimit" class="setting">
-            <span>(seconds)</span>
-          </label>
-          <button id="settingsButton">Apply Settings</button>
-          <button id="boardResetButton">Reset Board</button>
-          <button id="closeSelectModalButton">Close Window</button>
+      </div>
+      <div class="row">
+        <div class="col">
+          <form action="">
+            <!-- form inputs for game settings -->
+            <label class="settings-group">
+              Board Size:
+              X<input type="number" name="x" class="setting">
+              Y<input type="number" name="y" class="setting">
+            </label>
+            <label class="settings-group">
+              <select name="players" class="setting">
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+              </select> players
+            </label>
+            <label class="settings-group">
+              Time Limit:
+              <input type="number" name="time" class="setting">
+              <br>
+              (in seconds, 0 for no timer)
+            </label>
+            <label class="settings-group">
+              Connect <input type="number" name="win" class="setting"> to win.
+            </label>
+            <button type="submit">Set</button>
+          </form>
         </div>
       </div>
     </div>
-    <!-- DYNAMICALLY POPULATED ELEMENT(S) -->
-    <aside></aside>
-    <main></main>
-    <!-- SCRIPT(S) -->
+    <div class="container modal hidden" id="winModal">
+      <div class="row">
+        <div class="col">
+          <p><!-- dynamically populated --></p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <button type="button" id="resetButton">Reset Board</button>
+          <button type="button" id="restartButton">Restart Game</button>
+        </div>
+      </div>
+    </div>
+    <div class="container game">
+      <div class="row" id="scoreBoardTop">
+        <div class="col">
+          <!-- dynamically populated -->
+        </div>
+      </div>
+      <div class="row" id="gameBoard">
+        <div class="col">
+          <!-- dynamically populated -->
+        </div>
+      </div>
+      <div class="row" id="scoreBoardBot">
+        <div class="col">
+          <!-- dynamically populated -->
+        </div>
+      </div>
+    </div>
+    <script src="./assets/js/scoreboard.js"></script>
+    <script src="./assets/js/token.js"></script>
+    <script src="./assets/js/game-board.js"></script>
+    <script src="./assets/js/game-manager.js"></script>
     <script src="./assets/js/main.js"></script>
   </body>
 </html>
