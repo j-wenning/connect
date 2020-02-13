@@ -70,7 +70,7 @@ class GameBoard {
     count += this.checkDir(y, x, 0, -1);
     count += this.checkDir(y, x, 0, 1);
     compareAndReset();
-    return highest >= this.winCondition;
+    return highest >= this.winCondition.val;
   }
 
   checkDir(y1, x1, yDir, xDir) {

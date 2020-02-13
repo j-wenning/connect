@@ -7,17 +7,17 @@ class GameManager {
     this.scoreboard = null;
     this.boardX = null;
     this.boardY = null;
-    this.winCondition = null;
     this.currentPlayer = null;
     this.currentPicking = null;
-    this.playerCount = {count: 2};
+    this.winCondition = { val: null };
+    this.playerCount = { count: null };
     this.tokens = [];
     this.time = this.timeLimit = 0;
     this.paused = true;
     this.timeActive = false;
 
     this.setBoardData(6, 7, 4);
-    this.setPlayerCount(this.playerCount.count);
+    this.setPlayerCount(2);
     this.reset();
 
     setInterval(()=>this.decrementTime(), 10);
@@ -136,7 +136,7 @@ class GameManager {
     if(data.get("x"))
       reset = !!(this.boardX = Number(data.get("x")));
     if(data.get("win"))
-      this.winCondition = Number(data.get("win"));
+      this.winCondition.val = Number(data.get("win"));
     if(data.get("time"))
       this.setTimeLimit(Number(data.get("time")));
     if(pCount > this.playerCount.count)
@@ -155,7 +155,7 @@ class GameManager {
   setBoardData(boardY, boardX, winCondition) {
     this.boardY = boardY;
     this.boardX = boardX;
-    this.winCondition = winCondition;
+    this.winCondition.val = winCondition;
   }
 
   selectToken(token) {
