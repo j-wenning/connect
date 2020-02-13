@@ -2,6 +2,7 @@ class GameManager {
   constructor() {
     this.winSequence = this.winSequence.bind(this);
     this.incrementPlayer = this.incrementPlayer.bind(this);
+
     this.gameBoard = null;
     this.scoreboard = null;
     this.boardX = null;
@@ -11,13 +12,16 @@ class GameManager {
     this.currentPicking = null;
     this.playerCount = {count: 2};
     this.tokens = [];
-    this.setBoardData(6, 7, 4);
     this.time = this.timeLimit = 0;
-    this.reset();
-    this.setPlayerCount(this.playerCount.count);
     this.paused = true;
     this.timeActive = false;
+
+    this.setBoardData(6, 7, 4);
+    this.setPlayerCount(this.playerCount.count);
+    this.reset();
+
     setInterval(()=>this.decrementTime(), 10);
+
     document.addEventListener("click", e=>this.onClick(e));
     document.querySelector("form").addEventListener("submit", e=>this.onSubmit(e));
   }
@@ -86,9 +90,10 @@ class GameManager {
     else if(target.classList.contains("token"))
       this.gameBoard.placeToken(
         Number(target.getAttribute("data-x")), this.currentPlayer);
-    else if(target.id === "resetButton") {
+    else if(target.classList.contains("reset")) {
       this.restart();
-      this.toggleWinModal();
+      if(target.parentElement.tagName !== "FORM")
+        this.toggleWinModal();
     }
     else if (target.id === "restartButton") {
       this.reset();
