@@ -58,7 +58,7 @@ body {
 
 /* new tokens must also be added to main script  */
 /* default tokens are used solely in the UI, not gameboard */
-.token {
+.ui-token {
   height: 7vh;
   width: 7vh;
 }

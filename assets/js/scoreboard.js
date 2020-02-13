@@ -28,7 +28,7 @@ class Scoreboard {
     score.appendChild(document.createElement("p"))
       .classList.add("name");
     score.appendChild(document.createElement("div"))
-      .classList.add("token", this.playerTokens[player]);
+      .classList.add("ui-token", this.playerTokens[player]);
     score.appendChild(document.createElement("p"))
       .classList.add("score");
     score.firstElementChild.textContent = `${PLAYERS[player]}`;
@@ -61,7 +61,7 @@ class Scoreboard {
     board.appendChild(document.createElement("div"))
       .appendChild(document.createElement("span"))
       .setAttribute("id", "time");
-    board.firstElementChild.classList.add("token", "empty");
+    board.firstElementChild.classList.add("ui-token", "empty");
     board.lastElementChild.classList.add("timer");
   }
 }

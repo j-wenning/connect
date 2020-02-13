@@ -109,7 +109,7 @@ class GameBoard {
     const token = this.grid[y][x];
     let updated = false;
 
-    if (token.val === EMPTY) {
+    if (token.val === EMPTY && typeof val === typeof Number()) {
       token.val = val;
       updated = true;
     }

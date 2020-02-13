@@ -43,7 +43,7 @@ class GameManager {
     board.innerHTML = "";
     for(let i = 0; i < TOKENS.length; ++i) {
       element = board.appendChild(document.createElement("button"));
-      element.classList.add("select", "token", TOKENS[i]);
+      element.classList.add("select", "ui-token", TOKENS[i]);
       element.setAttribute("data-selected", i < this.playerCount ? i + 1 : EMPTY);
       element.appendChild(document.createElement("span"));
       if(i < this.playerCount)
@@ -54,6 +54,7 @@ class GameManager {
   toggleWinModal(stalemate) {
     const modal = document.querySelector("#winModal");
     const p = modal.querySelector("p");
+
     modal.classList.toggle("hidden");
     if(stalemate)
       p.textContent = "GAME OVER";
@@ -63,6 +64,7 @@ class GameManager {
 
   toggleSelectModal() {
     this.currentPicking = 0;
+    this.paused = !this.paused;
     document.querySelector("#selectModal").classList.toggle("hidden");
   }
 
@@ -74,13 +76,17 @@ class GameManager {
     else if(target.classList.contains("token"))
       this.gameBoard.placeToken(
         Number(target.getAttribute("data-x")), this.currentPlayer);
-    else if(target === document.querySelector("#resetButton")) {
+    else if(target.id === "resetButton") {
       this.restart();
       this.toggleWinModal();
     }
-    else if (target === document.querySelector("#restartButton")) {
+    else if (target.id === "restartButton") {
       this.reset();
       this.toggleWinModal();
+    }
+    else if(target.id === "closeSelectButton"
+         || target.classList.contains("ui-token")) {
+      this.toggleSelectModal();
     }
   }
 
@@ -141,6 +147,7 @@ class GameManager {
       this.incrementPlayer("picking");
       this.scoreboard.displayScores();
       this.scoreboard.setToken(this.tokens[this.currentPlayer]);
+      this.gameBoard.updateTokens();
     }
   }
 
