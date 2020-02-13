@@ -87,9 +87,11 @@ class GameManager {
 
     if(target.classList.contains("select"))
       this.selectToken(target);
-    else if(target.classList.contains("token"))
-      this.gameBoard.placeToken(
-        Number(target.getAttribute("data-x")), this.currentPlayer);
+    else if(target.classList.contains("token")) {
+      if (this.gameBoard
+          .placeToken(Number(target.getAttribute("data-x")), this.currentPlayer))
+        this.resetTime();
+    }
     else if(target.classList.contains("reset")) {
       this.restart();
       if(target.parentElement.tagName !== "FORM")

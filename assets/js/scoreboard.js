@@ -45,11 +45,15 @@ class Scoreboard {
 
   displayTime(time, timeLimit, timeActive) {
     const span = document.querySelector("#time");
+    let displayedTime;
 
     if(timeActive) {
       span.parentElement.classList.remove("hidden");
-      if(time >= 0 && time <= timeLimit - TIME_OFFSET)
-        span.textContent = `${Math.floor(time / 100)}.${(time % 100).toString().padStart(2, "0")}`;
+      if(time >= 0) {
+        displayedTime = time < timeLimit - TIME_OFFSET ?
+          time : timeLimit - TIME_OFFSET;
+        span.textContent = `${ Math.floor(displayedTime / 100) }.${ (displayedTime % 100).toString().padStart(2, "0") }s`;
+      }
     } else span.parentElement.classList.add("hidden");
   }
 
