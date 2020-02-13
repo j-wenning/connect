@@ -1,5 +1,6 @@
 class Scoreboard {
-  constructor(playerCount) {
+  constructor(playerCount, playerTokens) {
+    this.playerTokens = playerTokens;
     this.scores = []
     this.scores.length = playerCount;
     this.scores.fill(0);
@@ -26,6 +27,8 @@ class Scoreboard {
     score.classList.add("player");
     score.appendChild(document.createElement("p"))
       .classList.add("name");
+    score.appendChild(document.createElement("div"))
+      .classList.add("token", this.playerTokens[player]);
     score.appendChild(document.createElement("p"))
       .classList.add("score");
     score.firstElementChild.textContent = `${PLAYERS[player]}`;
@@ -45,7 +48,7 @@ class Scoreboard {
     if(timeActive) {
       span.parentElement.classList.remove("hidden");
       if(time >= 0 && time <= timeLimit - TIME_OFFSET)
-        span.textContent = time;
+        span.textContent = `${Math.floor(time / 100)}.${(time % 100).toString().padStart(2, "0")}`;
     } else span.parentElement.classList.add("hidden");
   }
 

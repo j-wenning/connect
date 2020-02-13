@@ -33,7 +33,7 @@ class GameManager {
   }
 
   createScoreboard() {
-    this.scoreboard = new Scoreboard(this.playerCount);
+    this.scoreboard = new Scoreboard(this.playerCount, this.tokens);
   }
 
   createSelectModal() {
@@ -70,7 +70,7 @@ class GameManager {
     const target = e.target;
 
     if(target.classList.contains("select"))
-      ;
+      this.selectToken(target);
     else if(target.classList.contains("token"))
       this.gameBoard.placeToken(
         Number(target.getAttribute("data-x")), this.currentPlayer);
@@ -89,6 +89,7 @@ class GameManager {
   }
 
   restart() {
+    this.currentPicking = 0;
     this.currentPlayer = -1;
     this.createGameBoard();
     this.incrementPlayer("current");
@@ -125,8 +126,22 @@ class GameManager {
     this.winCondition = winCondition;
   }
 
-  selectToken() {
+  selectToken(token) {
+    const siblings = token.parentElement.children;
 
+    if(token.getAttribute("data-selected") === `${EMPTY}`) {
+      for(let i = 0; i < siblings.length; ++i)
+        if (Number(siblings[i].getAttribute("data-selected")) === this.currentPicking + 1) {
+          siblings[i].setAttribute("data-selected", EMPTY);
+          siblings[i].firstElementChild.textContent = "";
+        }
+      this.tokens[this.currentPicking] = token.classList.item(2);
+      token.setAttribute("data-selected", this.currentPicking + 1);
+      token.firstElementChild.textContent = `P${this.currentPicking + 1}`;
+      this.incrementPlayer("picking");
+      this.scoreboard.displayScores();
+      this.scoreboard.setToken(this.tokens[this.currentPlayer]);
+    }
   }
 
   setPlayerCount(count) {
@@ -167,7 +182,6 @@ class GameManager {
       break;
       case "picking":
         this.currentPicking = (this.currentPicking + 1) % this.playerCount;
-
       break;
     }
 
