@@ -1,8 +1,9 @@
 class Scoreboard {
   constructor(playerCount, playerTokens) {
+    this.playerCount = playerCount;
     this.playerTokens = playerTokens;
     this.scores = []
-    this.scores.length = playerCount;
+    this.scores.length = playerCount.count;
     this.scores.fill(0);
     this.displayScores();
     this.createTime();
@@ -17,7 +18,7 @@ class Scoreboard {
     const board = document.querySelector("#scoreBoardTop .col")
 
     board.innerHTML = "";
-    for(let i = 0; i < this.scores.length; ++i)
+    for(let i = 0; i < this.playerCount.count; ++i)
       board.appendChild(this.createScore(i));
   }
 

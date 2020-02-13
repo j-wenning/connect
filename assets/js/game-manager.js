@@ -9,13 +9,12 @@ class GameManager {
     this.winCondition = null;
     this.currentPlayer = null;
     this.currentPicking = null;
-    this.playerCount = null;
-    this.tokens = null;
+    this.playerCount = {count: 2};
+    this.tokens = [];
     this.setBoardData(6, 7, 4);
     this.time = this.timeLimit = 0;
-    this.setPlayerCount(2);
-    this.createSelectModal();
     this.reset();
+    this.setPlayerCount(this.playerCount.count);
     this.paused = true;
     this.timeActive = false;
     setInterval(()=>this.decrementTime(), 10);
@@ -38,16 +37,27 @@ class GameManager {
 
   createSelectModal() {
     const board = document.querySelector("#selectModal .row .col");
+    const players = document.querySelector("#players");
     let element;
+    let data;
 
     board.innerHTML = "";
+    players.innerHTML = "";
     for(let i = 0; i < TOKENS.length; ++i) {
+      if(i > 0) {
+        element = players.appendChild(document.createElement("option"));
+        element.setAttribute("value", i + 1);
+        element.innerText = i + 1;
+      }
       element = board.appendChild(document.createElement("button"));
       element.classList.add("select", "ui-token", TOKENS[i]);
-      element.setAttribute("data-selected", i < this.playerCount ? i + 1 : EMPTY);
+      element.setAttribute("data-selected", i < this.playerCount.count ? i + 1 : EMPTY);
       element.appendChild(document.createElement("span"));
-      if(i < this.playerCount)
-        element.firstElementChild.textContent = `P${i + 1}`;
+      if(i < this.playerCount.count) {
+        data = element.getAttribute("data-selected");
+        if (data !== `${EMPTY}`)
+          element.firstElementChild.textContent = `P${data}`;
+      }
     }
   }
 
@@ -91,7 +101,9 @@ class GameManager {
   }
 
   resetTokens() {
-    this.tokens = TOKENS.slice(this.playerCount);
+    this.tokens.length = this.playerCount.count;
+    for(let i = 0; i < this.playerCount.count; ++i)
+      this.tokens[i] = TOKENS[i];
   }
 
   restart() {
@@ -109,19 +121,26 @@ class GameManager {
   onSubmit(e) {
     const data = new FormData(e.target);
     let pCount = data.get("players");
+    let reset = false;
 
     e.preventDefault();
     if(data.get("y"))
-      this.boardY = Number(data.get("y"));
+      reset = !!(this.boardY = Number(data.get("y")));
     if(data.get("x"))
-      this.boardX = Number(data.get("x"));
+      reset = !!(this.boardX = Number(data.get("x")));
     if(data.get("win"))
       this.winCondition = Number(data.get("win"));
     if(data.get("time"))
       this.setTimeLimit(Number(data.get("time")));
-    if(pCount !== this.playerCount)
+    if(pCount > this.playerCount.count)
       this.setPlayerCount(pCount);
-    this.reset();
+    else if (pCount < this.playerCount.count)
+      reset = !(this.setPlayerCount(pCount));
+    if(reset)
+      this.reset();
+    else
+      this.createScoreboard();
+    this.scoreboard.setToken(this.tokens[this.currentPlayer]);
     e.target.reset();
     document.querySelector("select.setting").value = pCount;
   }
@@ -152,8 +171,9 @@ class GameManager {
   }
 
   setPlayerCount(count) {
+    this.currentPicking = 0;
+    this.playerCount.count = count;
     this.resetTokens();
-    this.playerCount = count;
     this.createSelectModal();
   }
 
@@ -184,11 +204,11 @@ class GameManager {
   incrementPlayer(player) {
     switch(player) {
       case "current":
-        this.currentPlayer = (this.currentPlayer + 1) % this.playerCount;
+        this.currentPlayer = (this.currentPlayer + 1) % this.playerCount.count;
         this.scoreboard.setToken(this.tokens[this.currentPlayer]);
       break;
       case "picking":
-        this.currentPicking = (this.currentPicking + 1) % this.playerCount;
+        this.currentPicking = (this.currentPicking + 1) % this.playerCount.count;
       break;
     }
 

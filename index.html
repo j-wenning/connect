@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3.0, minimum-scale=0.86">
   </head>
   <body>
-    <div class="container modal -hidden" id="selectModal">
+    <div class="container modal" id="selectModal">
       <div class="row">
         <div class="col">
           <!-- dynamically populated -->
@@ -21,12 +21,8 @@
               Y<input type="number" name="y" class="setting">
             </label>
             <label class="settings-group">
-              <select name="players" class="setting">
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
+              <select name="players" class="setting" id="players">
+                <!-- dynamicaly populated -->
               </select> players
             </label>
             <label class="settings-group">
