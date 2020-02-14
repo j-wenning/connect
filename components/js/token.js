@@ -10,7 +10,7 @@ class Token {
     elem.setAttribute("data-x", x);
     elem.setAttribute(
       "style", `width: ${100 / w}%; height: ${100 / h}%;`);
-    elem.classList.add("token", "empty");
+    elem.classList.add("token", "empty", x % 2 ? "odd" : "even");
     return elem;
   }
 }

@@ -63,6 +63,14 @@ body {
   width: 7vh;
 }
 
+.odd {
+  background-color: gray;
+}
+
+.even {
+  background-color: lightgray;
+}
+
 .empty,
 .fox-token,
 .falco-token,
@@ -71,7 +79,6 @@ body {
 .andross-token,
 .peppy-token {
   box-sizing: border-box;
-  background-color: cyan;
   border: 2px solid black;
 }
 
