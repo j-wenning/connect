@@ -1,5 +1,6 @@
 class GameBoard {
   constructor(boardY, boardX, tokens, currentPlayer, incrementPlayer, winCondition, winSequence) {
+    this.hovered = null;
     this.boardY = boardY;
     this.boardX = boardX;
     this.tokens = tokens;
@@ -22,6 +23,22 @@ class GameBoard {
     return grid;
   }
 
+  unHover() {
+    if(this.hovered)
+      this.hovered.classList.remove("highlight");
+    this.hovered = null;
+  }
+
+  hover(x, y = 0) {
+    while(this.checkAt(y, x)) {
+      console.log(y);
+      if(this.highlight(y, x))
+        return true;
+      ++y;
+    }
+    return false;
+  }
+
   placeToken(x, val) {
     let y = 0;
 
@@ -32,11 +49,27 @@ class GameBoard {
         else if (this.checkStale())
           this.winSequence(true);
         this.incrementPlayer("current");
+        this.hover(x);
+        // primarily for mobile
+        setTimeout(()=>this.unHover(), 1000);
         return true;
       }
       ++y;
     }
 
+    return false;
+  }
+
+  highlight(y, x) {
+    const elem = this.grid[y][x].elem;
+
+    if(this.grid[y][x].val === EMPTY) {
+      if (this.hovered)
+        this.hovered.classList.remove("highlight");
+      elem.classList.add("highlight");
+      this.hovered = elem;
+      return true;
+    }
     return false;
   }
 

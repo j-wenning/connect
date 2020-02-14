@@ -83,6 +83,18 @@ class GameManager {
     document.querySelector("#selectModal").classList.toggle("hidden");
   }
 
+  restart() {
+    this.currentPicking = 0;
+    this.currentPlayer = -1;
+    this.createGameBoard();
+    this.incrementPlayer("current");
+  }
+
+  reset() {
+    this.createScoreboard();
+    this.restart();
+  }
+
   onClick(e) {
     const target = e.target;
 
@@ -109,22 +121,13 @@ class GameManager {
     }
   }
 
-  resetTokens() {
-    this.tokens.length = this.playerCount.count;
-    for(let i = 0; i < this.playerCount.count; ++i)
-      this.tokens[i] = TOKENS[i];
-  }
+  onMouseOver(e) {
+    const target = e.target;
 
-  restart() {
-    this.currentPicking = 0;
-    this.currentPlayer = -1;
-    this.createGameBoard();
-    this.incrementPlayer("current");
-  }
-
-  reset() {
-    this.createScoreboard();
-    this.restart();
+    if(target.classList.contains("token"))
+      this.gameBoard.hover(Number(target.getAttribute("data-x")));
+    else
+      this.gameBoard.unHover();
   }
 
   onSubmit(e) {
@@ -158,6 +161,12 @@ class GameManager {
     this.boardY = boardY;
     this.boardX = boardX;
     this.winCondition.val = winCondition;
+  }
+
+  resetTokens() {
+    this.tokens.length = this.playerCount.count;
+    for (let i = 0; i < this.playerCount.count; ++i)
+      this.tokens[i] = TOKENS[i];
   }
 
   selectToken(token) {
@@ -224,7 +233,8 @@ class GameManager {
   }
 
   winSequence(stalemate) {
-    this.scoreboard.incrementScore(this.currentPlayer);
+    if(!stalemate)
+      this.scoreboard.incrementScore(this.currentPlayer);
     this.toggleWinModal(stalemate);
   }
 }
