@@ -1,10 +1,10 @@
 class GameBoard {
-  constructor(boardY, boardX, tokens, incrementPlayer, currentPlayer, winCondition, winSequence) {
+  constructor(boardY, boardX, tokens, currentPlayer, incrementPlayer, winCondition, winSequence) {
     this.boardY = boardY;
     this.boardX = boardX;
     this.tokens = tokens;
-    this.incrementPlayer = incrementPlayer;
     this.currentPlayer = currentPlayer;
+    this.incrementPlayer = incrementPlayer;
     this.winCondition = winCondition;
     this.winSequence = winSequence;
     this.grid = this.createGrid(boardY, boardX);

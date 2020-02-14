@@ -23,6 +23,7 @@ class GameManager {
     setInterval(()=>this.decrementTime(), 10);
 
     document.addEventListener("click", e=>this.onClick(e));
+    document.addEventListener("mouseover", e=>this.onMouseOver(e));
     document.querySelector("form").addEventListener("submit", e=>this.onSubmit(e));
   }
 
@@ -30,7 +31,7 @@ class GameManager {
     this.gameBoard = new GameBoard(
       this.boardY, this.boardX,
       this.tokens,
-      this.incrementPlayer, this.currentPlayer,
+      this.currentPlayer, this.incrementPlayer,
       this.winCondition, this.winSequence);
     this.gameBoard.displayGrid();
   }
@@ -92,14 +93,15 @@ class GameManager {
           .placeToken(Number(target.getAttribute("data-x")), this.currentPlayer))
         this.resetTime();
     }
-    else if(target.classList.contains("reset")) {
+    else if(target.classList.contains("restart")) {
       this.restart();
       if(target.parentElement.tagName !== "FORM")
         this.toggleWinModal();
     }
-    else if (target.id === "restartButton") {
+    else if (target.classList.contains("reset")) {
       this.reset();
-      this.toggleWinModal();
+      if (target.parentElement.tagName !== "FORM")
+        this.toggleWinModal();
     }
     else if(target.id === "closeSelectButton"
          || target.classList.contains("ui-token")) {
