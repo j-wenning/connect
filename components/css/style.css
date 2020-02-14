@@ -1,6 +1,7 @@
 body {
   height: 100vh;
   margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .container {
@@ -37,6 +38,42 @@ body {
   position: fixed;
   background-color: black;
   color: white;
+}
+
+.popup {
+  position: fixed;
+  bottom: 0;
+  height: initial;
+}
+
+.message {
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  padding: 15px 5px;
+  padding-right: 25px;
+  border: 3px solid white;
+  border-radius: 15px;
+  color: black;
+  background-color: #eeb54b;
+  font-size: 12pt;
+  text-align: justify;
+  -webkit-text-stroke: 0.5pt gray;
+}
+
+.close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: none;
+  color: white;
+  background-color: transparent;
+  font-size: 18pt;
+}
+
+.message span {
+  font-size: 32pt;
 }
 
 .player {

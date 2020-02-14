@@ -83,6 +83,15 @@ class GameManager {
     document.querySelector("#selectModal").classList.toggle("hidden");
   }
 
+  closePopUp(target) {
+    let current = target;
+
+    while(current && !current.classList.contains("popup"))
+      current = current.parentElement;
+    if(current)
+      current.classList.add("hidden");
+  }
+
   restart() {
     this.currentPicking = 0;
     this.currentPlayer = -1;
@@ -98,14 +107,16 @@ class GameManager {
   onClick(e) {
     const target = e.target;
 
-    if(target.classList.contains("select"))
+    if (target.classList.contains("close"))
+      this.closePopUp(target);
+    else if (target.classList.contains("select"))
       this.selectToken(target);
-    else if(target.classList.contains("token")) {
+    else if (target.classList.contains("token")) {
       if (this.gameBoard
           .placeToken(Number(target.getAttribute("data-x")), this.currentPlayer))
         this.resetTime();
     }
-    else if(target.classList.contains("restart")) {
+    else if (target.classList.contains("restart")) {
       this.restart();
       if(target.parentElement.tagName !== "FORM")
         this.toggleWinModal();
@@ -115,10 +126,9 @@ class GameManager {
       if (target.parentElement.tagName !== "FORM")
         this.toggleWinModal();
     }
-    else if(target.id === "closeSelectButton"
-         || target.classList.contains("ui-token")) {
+    else if (target.id === "closeSelectButton"
+         || target.classList.contains("ui-token"))
       this.toggleSelectModal();
-    }
   }
 
   onMouseOver(e) {
