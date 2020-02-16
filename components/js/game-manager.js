@@ -25,6 +25,7 @@ class GameManager {
     document.addEventListener("click", e=>this.onClick(e));
     document.addEventListener("mouseover", e=>this.onMouseOver(e));
     document.querySelector("form").addEventListener("submit", e=>this.onSubmit(e));
+    window.addEventListener("resize", ()=>this.onResize());
   }
 
   createGameBoard() {
@@ -41,7 +42,7 @@ class GameManager {
   }
 
   createSelectModal() {
-    const board = document.querySelector("#selectModal .row .col");
+    const board = document.querySelector("#selectTokens");
     const players = document.querySelector("#players");
     let element;
     let data;
@@ -165,6 +166,10 @@ class GameManager {
     this.scoreboard.setToken(this.tokens[this.currentPlayer]);
     e.target.reset();
     document.querySelector("select.setting").value = pCount;
+  }
+
+  onResize() {
+    this.gameBoard.resize(window);
   }
 
   setBoardData(boardY, boardX, winCondition) {

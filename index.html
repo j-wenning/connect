@@ -18,7 +18,7 @@
     </div>
     <div class="container modal" id="selectModal">
       <div class="row">
-        <div class="col">
+        <div class="col" id="selectTokens">
           <!-- dynamically populated -->
         </div>
       </div>
@@ -27,8 +27,8 @@
           <form>
             <label class="settings-group">
               Board Size:
-              X<input type="number" name="x" class="setting">
-              Y<input type="number" name="y" class="setting">
+              X <input type="number" name="x" class="setting">
+              Y <input type="number" name="y" class="setting">
             </label>
             <label class="settings-group">
               <select name="players" class="setting" id="players">
@@ -44,9 +44,10 @@
             <label class="settings-group">
               Connect <input type="number" name="win" class="setting"> to win.
             </label>
-            <button type="submit">Set</button>
+            <button type="submit">Set Board</button>
             <button type="button" class="reset">Reset Board</button>
             <button type="button" class="restart">Restart Game</button>
+            <!-- <button type="button" id="closeSelectButton">Return To Game</button> -->
           </form>
         </div>
       </div>
@@ -75,9 +76,11 @@
           <!-- dynamically populated -->
         </div>
       </div>
-      <div class="row" id="gameBoard">
+      <div class="row">
         <div class="col">
-          <!-- dynamically populated -->
+          <div id="gameBoard">
+            <!-- dynamically populated -->
+          </div>
         </div>
       </div>
       <div class="row" id="scoreBoardBot">

@@ -17,26 +17,34 @@ class GameBoard {
 
     for (let y = 0; y < boardY; ++y) {
       grid.push([]);
-      for (let x = 0; x < boardX; ++x)
+      for (let x = 0; x < boardX; ++x) {
         grid[y][x] = new Token(EMPTY, x, boardY, boardX);
+        // set rounded corners for board
+        if(boardX === 1) {
+          if (y === 0 && x === 0)
+            grid[y][x].elem.classList.add("top");
+          else if (y === boardY - 1 && x === boardX - 1)
+            grid[y][x].elem.classList.add("bottom");
+        }
+        else if (boardY === 1) {
+          if (y === 0 && x === 0)
+            grid[y][x].elem.classList.add("left");
+          else if (y === boardY - 1 && x === boardX - 1)
+            grid[y][x].elem.classList.add("right");
+        }
+        else {
+          if (y === 0 && x === 0)
+            grid[y][x].elem.classList.add("bottom-left");
+          else if (y === 0 && x === boardX - 1)
+            grid[y][x].elem.classList.add("bottom-right");
+          else if (y === boardY - 1 && x === 0)
+            grid[y][x].elem.classList.add("top-left");
+          else if (y === boardY - 1 && x === boardX - 1)
+            grid[y][x].elem.classList.add("top-right");
+        }
+      }
     }
     return grid;
-  }
-
-  unHover() {
-    if(this.hovered)
-      this.hovered.classList.remove("highlight");
-    this.hovered = null;
-  }
-
-  hover(x, y = 0) {
-    while(this.checkAt(y, x)) {
-      console.log(y);
-      if(this.highlight(y, x))
-        return true;
-      ++y;
-    }
-    return false;
   }
 
   placeToken(x, val) {
@@ -57,19 +65,6 @@ class GameBoard {
       ++y;
     }
 
-    return false;
-  }
-
-  highlight(y, x) {
-    const elem = this.grid[y][x].elem;
-
-    if(this.grid[y][x].val === EMPTY) {
-      if (this.hovered)
-        this.hovered.classList.remove("highlight");
-      elem.classList.add("highlight");
-      this.hovered = elem;
-      return true;
-    }
     return false;
   }
 
@@ -124,18 +119,68 @@ class GameBoard {
   }
 
   // BOARD DISPLAY
+  highlight(y, x) {
+    const elem = this.grid[y][x].elem;
+
+    if (this.grid[y][x].val === EMPTY) {
+      if (this.hovered)
+        this.hovered.classList.remove("highlight");
+      elem.classList.add("highlight");
+      this.hovered = elem;
+      return true;
+    }
+    return false;
+  }
+
+  unHover() {
+    if (this.hovered)
+      this.hovered.classList.remove("highlight");
+    this.hovered = null;
+  }
+
+  hover(x, y = 0) {
+    while (this.checkAt(y, x)) {
+      console.log(y);
+      if (this.highlight(y, x))
+        return true;
+      ++y;
+    }
+    return false;
+  }
+
   changeTokens(tokens) {
     this.tokens = tokens;
     this.updateTokens();
   }
 
+  resize() {
+    const gameBoard = document.querySelector("#gameBoard");
+    const wH = window.innerHeight;
+    const wW = window.innerWidth;
+    const bSize = (wW < wH ? wW : wH) * 0.75;
+    let bH;
+    let bW;
+
+    if(this.boardX < this.boardY) {
+      bH = bSize;
+      bW = (bSize / this.boardY) * this.boardX;
+    } else {
+      bH = (bSize / this.boardX) * this.boardY;
+      bW = bSize;
+    }
+    gameBoard.setAttribute("style",
+      `height: ${bH}px;
+      width: ${bW}px;`);
+  }
+
   displayGrid() {
-    const gameBoard = document.querySelector("#gameBoard .col");
+    const gameBoard = document.querySelector("#gameBoard");
 
     gameBoard.innerHTML = "";
     for(let y = this.boardY - 1; y >= 0; --y)
       for(let x = 0; x < this.boardX; ++x)
         gameBoard.appendChild(this.grid[y][x].elem);
+    this.resize();
   }
 
   updateToken(y, x, val) {

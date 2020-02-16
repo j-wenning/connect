@@ -1,7 +1,33 @@
+@import url(./reset.css);
+
 body {
   height: 100vh;
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
+  font-size: 12pt;
+}
+
+button {
+  width: 50%;
+  max-width: 300px;
+  margin: 3px auto;
+  padding: 5px 0;
+  border-radius: 5px;
+  border: 2px solid black;
+  color: white;
+  background-color: #333333;
+  font-size: 12pt;
+  font-weight: bold;
+}
+
+form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 400px;
+  background-color: #111111cc;
+  padding: 10px;
+
 }
 
 .container {
@@ -19,15 +45,23 @@ body {
 .col {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
   height: 100%;
   width: 95%;
   margin: 0 auto;
-  align-items: center;
-  justify-content: space-around;
 }
 
 .settings-group {
   display: block;
+  width: 75%;
+  max-width: 300px;
+  margin: 3px auto;
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 2px solid black;
+  background-color: #666666cc;
+  font-weight: bold;
 }
 
 .setting {
@@ -36,8 +70,9 @@ body {
 
 .modal {
   position: fixed;
-  background-color: black;
   color: white;
+  background-color: #00000077;
+  box-shadow: inset 0 0 100px #000000;
 }
 
 .popup {
@@ -53,19 +88,21 @@ body {
   align-items: center;
   padding: 15px 5px;
   padding-right: 25px;
-  border: 3px solid white;
   border-radius: 15px;
+  border: 3px solid white;
   color: black;
   background-color: #eeb54b;
-  font-size: 12pt;
   text-align: justify;
+  text-justify: inter-character;
   -webkit-text-stroke: 0.5pt gray;
 }
 
 .close {
   position: absolute;
-  top: 0;
-  right: 0;
+  top: -1px;
+  right: 10px;
+  height: initial;
+  width: initial;
   border: none;
   color: white;
   background-color: transparent;
@@ -89,16 +126,29 @@ body {
 }
 
 .score, .timer {
-  font-size: 7vh;
   margin: 0;
+  font-size: 7vh;
+}
+
+#gameBoard {
+  display: flex;
+  flex-wrap: wrap;
 }
 
 /* new tokens must also be added to main script  */
 /* default tokens are used solely in the UI, not gameboard */
 .ui-token {
-  height: 7vh;
-  width: 7vh;
+  height: 13.5vh;
+  width: 13.5vh;
 }
+
+.player .ui-token {
+  height: 5vh;
+  width: 5vh;
+}
+
+/* .token {
+} */
 
 .odd {
   background-color: gray;
@@ -106,6 +156,38 @@ body {
 
 .even {
   background-color: lightgray;
+}
+
+.top {
+  border-radius: 0 0 10px 10px;
+}
+
+.left {
+  border-radius: 10px 0 0 10px;
+}
+
+.bottom {
+  border-radius: 10px 10px 0 0;
+}
+
+.right {
+  border-radius: 0 10px 10px 0;
+}
+
+.top-left {
+  border-top-left-radius: 10px;
+}
+
+.top-right {
+  border-top-right-radius: 10px;
+}
+
+.bottom-left {
+  border-bottom-left-radius: 10px;
+}
+
+.bottom-right {
+  border-bottom-right-radius: 10px;
 }
 
 .empty,
@@ -147,6 +229,10 @@ body {
   z-index: 1;
   box-shadow: 0 0 40px 35px white;
   background-color: white;
+}
+
+@media only screen and (min-width: 1000px) {
+
 }
 
 .hidden {
