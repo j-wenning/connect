@@ -108,7 +108,8 @@ class GameManager {
   onClick(e) {
     const target = e.target;
 
-    if (target.classList.contains("close"))
+    if (target.classList.contains("close")
+    || target.classList.contains("message"))
       this.closePopUp(target);
     else if (target.classList.contains("select"))
       this.selectToken(target);
