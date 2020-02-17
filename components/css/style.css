@@ -2,6 +2,7 @@
 
 body {
   height: 100vh;
+  width: 100%;
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 12pt;
@@ -118,7 +119,7 @@ form {
   padding: 30px;
   border: 1px solid #ffffff55;
   border-radius: 5px;
-  background-color: #00000055;
+  background-color: #000000dd;
   font-weight: bold;
 }
 
@@ -133,6 +134,7 @@ form {
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-around;
+  flex-basis: calc(100%/3);
   text-align: center;
 }
 
@@ -146,12 +148,17 @@ form {
   font-weight: bold;
 }
 
+.player .ui-token {
+  width: 50%;
+}
+
 .score,
 .timer {
   box-sizing: border-box;
-  margin: 0;
-  font-size: 7vh;
-  padding: 3px 15px;
+  width: 50%;
+  margin: 5px 0;
+  font-size: 6vh;
+  padding: 3px 1%;
   color: white;
   background-color: #00000066;
 }
@@ -159,6 +166,14 @@ form {
 #gameBoard {
   display: flex;
   flex-wrap: wrap;
+}
+
+.background {
+  background-image: url(../../assets/images/background.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  box-shadow: inset 0 -50px 50px -50px #ffffff,
+              inset 0 0 1000px 1000px #00000088;
 }
 
 /* new tokens must also be added to main script  */
@@ -179,11 +194,11 @@ form {
 }
 
 .odd {
-  background-color: #99999977;
+  background-color: #555555bb;
 }
 
 .even {
-  background-color: #66666677;
+  background-color: #333333bb;
 }
 
 .top {
@@ -226,34 +241,37 @@ form {
 .andross-token,
 .peppy-token {
   box-sizing: border-box;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
-/* .empty {
-
-} */
+.empty {
+  background-image: url(../../assets/images/tokens/empty-token.png);
+}
 
 .fox-token {
-  background-color: red;
+  background-image: url(../../assets/images/tokens/fox-token.png);
 }
 
 .falco-token {
-  background-color: blue;
+  background-image: url(../../assets/images/tokens/falco-token.png);
 }
 
 .slippy-token {
-  background-color: green;
+  background-image: url(../../assets/images/tokens/slippy-token.png);
 }
 
 .krystal-token {
-  background-color: purple;
+  background-image: url(../../assets/images/tokens/krystal-token.png);
 }
 
 .andross-token {
-  background-color: yellow;
+  background-image: url(../../assets/images/tokens/andross-token.png);
 }
 
 .peppy-token {
-  background-color: orange;
+  background-image: url(../../assets/images/tokens/peppy-token.png);
 }
 
 .highlight {
@@ -263,7 +281,9 @@ form {
 }
 
 @media only screen and (min-width: 1000px) {
-
+  body {
+    height: unset;
+  }
 }
 
 .hidden {
