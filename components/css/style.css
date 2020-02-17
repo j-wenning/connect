@@ -11,7 +11,7 @@ body {
 button {
   width: 50%;
   max-width: 300px;
-  margin: 3px auto;
+  margin: 3px 0;
   padding: 5px 0;
   border-radius: 5px;
   border: 2px solid black;
@@ -129,6 +129,11 @@ form {
   justify-content: flex-start;
 }
 
+.restart,
+.reset {
+  margin: 3px auto;
+}
+
 .player {
   display: flex;
   flex-wrap: wrap;
@@ -166,6 +171,15 @@ form {
 #gameBoard {
   display: flex;
   flex-wrap: wrap;
+}
+
+#selectTokens {
+  justify-content: space-evenly;
+}
+
+.select span {
+  padding: 10px;
+  background-color: #000000bb;
 }
 
 .background {
