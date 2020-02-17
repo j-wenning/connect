@@ -138,12 +138,22 @@ form {
 
 .name {
   width: 100%;
+  padding: 5px 0;
+  border: 1px solid white;
+  border-radius: 5px;
+  color: white;
+  background-color: #00000066;
+  font-weight: bold;
 }
 
 .score,
 .timer {
+  box-sizing: border-box;
   margin: 0;
   font-size: 7vh;
+  padding: 3px 15px;
+  color: white;
+  background-color: #00000066;
 }
 
 #gameBoard {
@@ -152,7 +162,12 @@ form {
 }
 
 /* new tokens must also be added to main script  */
-/* default tokens are used solely in the UI, not gameboard */
+#token ,
+.timer{
+  width: 50%;
+  text-align: center;
+}
+
 .ui-token {
   height: 13.5vh;
   width: 13.5vh;
@@ -163,15 +178,12 @@ form {
   width: 5vh;
 }
 
-/* .token {
-} */
-
 .odd {
-  background-color: gray;
+  background-color: #99999977;
 }
 
 .even {
-  background-color: lightgray;
+  background-color: #66666677;
 }
 
 .top {
@@ -214,8 +226,11 @@ form {
 .andross-token,
 .peppy-token {
   box-sizing: border-box;
-  border: 2px solid black;
 }
+
+/* .empty {
+
+} */
 
 .fox-token {
   background-color: red;
