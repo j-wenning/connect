@@ -57,9 +57,7 @@ class GameBoard {
         else if (this.checkStale())
           this.winSequence(true);
         this.incrementPlayer("current");
-        this.hover(x);
-        // primarily for mobile
-        setTimeout(()=>this.unHover(), 1000);
+        this.unHover();
         return true;
       }
       ++y;
@@ -140,7 +138,6 @@ class GameBoard {
 
   hover(x, y = 0) {
     while (this.checkAt(y, x)) {
-      console.log(y);
       if (this.highlight(y, x))
         return true;
       ++y;

@@ -23,7 +23,7 @@ class GameManager {
     setInterval(()=>this.decrementTime(), 10);
 
     document.addEventListener("click", e=>this.onClick(e));
-    document.addEventListener("mouseover", e=>this.onMouseOver(e));
+    document.addEventListener("mousemove", e=>this.onMouseMove(e));
     document.querySelector("form").addEventListener("submit", e=>this.onSubmit(e));
     window.addEventListener("resize", ()=>this.onResize());
   }
@@ -109,7 +109,7 @@ class GameManager {
     const target = e.target;
 
     if (target.classList.contains("close")
-    || target.classList.contains("message"))
+    || target.classList.contains("popup-message"))
       this.closePopUp(target);
     else if (target.classList.contains("select"))
       this.selectToken(target);
@@ -133,7 +133,7 @@ class GameManager {
       this.toggleSelectModal();
   }
 
-  onMouseOver(e) {
+  onMouseMove(e) {
     const target = e.target;
 
     if(target.classList.contains("token"))
