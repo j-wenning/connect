@@ -114,6 +114,20 @@ form {
   font-size: 32pt;
 }
 
+.win-message {
+  padding: 30px;
+  border: 1px solid #ffffff55;
+  border-radius: 5px;
+  background-color: #00000055;
+  font-weight: bold;
+}
+
+.win-buttons {
+  align-items: flex-start;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
 .player {
   display: flex;
   flex-wrap: wrap;
