@@ -60,10 +60,9 @@ class GameManager {
       element.classList.add("select", "ui-token", TOKENS[i]);
       element.setAttribute("data-selected", EMPTY);
       element.appendChild(document.createElement("span"));
-      if(i < this.playerCount.count) {
-        data = element.getAttribute("data-selected");
+      element.firstElementChild.classList.add("hidden");
+      if(i < this.playerCount.count)
         this.selectToken(element);
-      }
     }
   }
 
@@ -188,15 +187,17 @@ class GameManager {
   selectToken(token) {
     const siblings = token.parentElement.children;
 
-    if(token.getAttribute("data-selected") === `${EMPTY}`) {
-      for(let i = 0; i < siblings.length; ++i)
+    if (token.getAttribute("data-selected") === `${EMPTY}`) {
+      for (let i = 0; i < siblings.length; ++i)
         if (Number(siblings[i].getAttribute("data-selected")) === this.currentPicking + 1) {
           siblings[i].setAttribute("data-selected", EMPTY);
           siblings[i].firstElementChild.textContent = "";
+          siblings[i].firstElementChild.classList.add("hidden");
         }
       this.tokens[this.currentPicking] = token.classList.item(2);
       token.setAttribute("data-selected", this.currentPicking + 1);
       token.firstElementChild.textContent = `P${this.currentPicking + 1}`;
+      token.firstElementChild.classList.remove("hidden");
       this.incrementPlayer("picking");
       this.scoreboard.displayScores();
       this.scoreboard.setToken(this.tokens[this.currentPlayer]);
