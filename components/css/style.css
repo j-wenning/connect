@@ -1,22 +1,26 @@
 @import url(./reset.css);
 
+html {
+  font-size: 2.5vh;
+}
+
 body {
   height: 100vh;
+  width: 100%;
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 12pt;
 }
 
 button {
   width: 50%;
   max-width: 300px;
-  margin: 3px auto;
+  margin: 3px 0;
   padding: 5px 0;
   border-radius: 5px;
   border: 2px solid black;
   color: white;
   background-color: #333333;
-  font-size: 12pt;
+  font-size: 2.5vh;
   font-weight: bold;
 }
 
@@ -69,32 +73,11 @@ form {
 }
 
 .modal {
+  z-index: 3;
   position: fixed;
   color: white;
   background-color: #00000077;
   box-shadow: inset 0 0 100px #000000;
-}
-
-.popup {
-  position: fixed;
-  bottom: 0;
-  height: initial;
-}
-
-.message {
-  position: relative;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  padding: 15px 5px;
-  padding-right: 25px;
-  border-radius: 15px;
-  border: 3px solid white;
-  color: black;
-  background-color: #eeb54b;
-  text-align: justify;
-  text-justify: inter-character;
-  -webkit-text-stroke: 0.5pt gray;
 }
 
 .close {
@@ -109,8 +92,49 @@ form {
   font-size: 18pt;
 }
 
-.message span {
+.popup {
+  z-index: 2;
+  position: fixed;
+  bottom: 0;
+  height: initial;
+}
+
+.popup-message {
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  padding: 15px 5px;
+  padding-right: 25px;
+  border-radius: 15px;
+  border: 3px solid white;
+  color: black;
+  background-color: #eeb54b;
+  font-size: 1.25rem;
+  text-align: justify;
+}
+
+.popup-message span {
   font-size: 32pt;
+}
+
+.win-message {
+  padding: 30px;
+  border: 1px solid #ffffff55;
+  border-radius: 5px;
+  background-color: #000000dd;
+  font-weight: bold;
+}
+
+.win-buttons {
+  align-items: flex-start;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.restart,
+.reset {
+  margin: 3px auto;
 }
 
 .player {
@@ -118,16 +142,34 @@ form {
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-around;
+  /* flex-basis: calc(100%/3); */
+  max-width: 100px;
   text-align: center;
 }
 
 .name {
   width: 100%;
+  padding: 5px 0;
+  border: 1px solid white;
+  border-radius: 5px;
+  color: white;
+  background-color: #00000066;
+  font-weight: bold;
 }
 
-.score, .timer {
-  margin: 0;
-  font-size: 7vh;
+.player .ui-token {
+  width: 50%;
+}
+
+.score,
+.timer {
+  box-sizing: border-box;
+  width: 50%;
+  margin: 5px 0;
+  font-size: 6vh;
+  padding: 3px 1%;
+  color: white;
+  background-color: #00000066;
 }
 
 #gameBoard {
@@ -135,9 +177,32 @@ form {
   flex-wrap: wrap;
 }
 
+#selectTokens {
+  justify-content: space-evenly;
+}
+
+.select span {
+  padding: 10px;
+  background-color: #000000bb;
+}
+
+.background {
+  background-image: url(../../assets/images/background.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  box-shadow: inset 0 -50px 50px -50px #ffffff,
+              inset 0 0 1000px 1000px #00000088;
+}
+
 /* new tokens must also be added to main script  */
-/* default tokens are used solely in the UI, not gameboard */
+#token ,
+.timer{
+  width: 50%;
+  text-align: center;
+}
+
 .ui-token {
+  /* modify to fit new tokens */
   height: 13.5vh;
   width: 13.5vh;
 }
@@ -147,15 +212,12 @@ form {
   width: 5vh;
 }
 
-/* .token {
-} */
-
 .odd {
-  background-color: gray;
+  background-color: #555555bb;
 }
 
 .even {
-  background-color: lightgray;
+  background-color: #333333bb;
 }
 
 .top {
@@ -198,31 +260,37 @@ form {
 .andross-token,
 .peppy-token {
   box-sizing: border-box;
-  border: 2px solid black;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.empty {
+  background-image: url(../../assets/images/tokens/empty-token.png);
 }
 
 .fox-token {
-  background-color: red;
+  background-image: url(../../assets/images/tokens/fox-token.png);
 }
 
 .falco-token {
-  background-color: blue;
+  background-image: url(../../assets/images/tokens/falco-token.png);
 }
 
 .slippy-token {
-  background-color: green;
+  background-image: url(../../assets/images/tokens/slippy-token.png);
 }
 
 .krystal-token {
-  background-color: purple;
+  background-image: url(../../assets/images/tokens/krystal-token.png);
 }
 
 .andross-token {
-  background-color: yellow;
+  background-image: url(../../assets/images/tokens/andross-token.png);
 }
 
 .peppy-token {
-  background-color: orange;
+  background-image: url(../../assets/images/tokens/peppy-token.png);
 }
 
 .highlight {
@@ -231,9 +299,9 @@ form {
   background-color: white;
 }
 
-@media only screen and (min-width: 1000px) {
+/* @media only screen and (min-width: 1000px) {
 
-}
+} */
 
 .hidden {
   display: none;

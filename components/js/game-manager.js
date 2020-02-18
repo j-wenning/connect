@@ -19,11 +19,12 @@ class GameManager {
     this.setBoardData(6, 7, 4);
     this.setPlayerCount(2);
     this.reset();
+    this.createSelectModal();
 
     setInterval(()=>this.decrementTime(), 10);
 
     document.addEventListener("click", e=>this.onClick(e));
-    document.addEventListener("mouseover", e=>this.onMouseOver(e));
+    document.addEventListener("mousemove", e=>this.onMouseMove(e));
     document.querySelector("form").addEventListener("submit", e=>this.onSubmit(e));
     window.addEventListener("resize", ()=>this.onResize());
   }
@@ -57,13 +58,11 @@ class GameManager {
       }
       element = board.appendChild(document.createElement("button"));
       element.classList.add("select", "ui-token", TOKENS[i]);
-      element.setAttribute("data-selected", i < this.playerCount.count ? i + 1 : EMPTY);
+      element.setAttribute("data-selected", EMPTY);
       element.appendChild(document.createElement("span"));
-      if(i < this.playerCount.count) {
-        data = element.getAttribute("data-selected");
-        if (data !== `${EMPTY}`)
-          element.firstElementChild.textContent = `P${data}`;
-      }
+      element.firstElementChild.classList.add("hidden");
+      if(i < this.playerCount.count)
+        this.selectToken(element);
     }
   }
 
@@ -108,7 +107,8 @@ class GameManager {
   onClick(e) {
     const target = e.target;
 
-    if (target.classList.contains("close"))
+    if (target.classList.contains("close")
+    || target.classList.contains("popup-message"))
       this.closePopUp(target);
     else if (target.classList.contains("select"))
       this.selectToken(target);
@@ -132,7 +132,7 @@ class GameManager {
       this.toggleSelectModal();
   }
 
-  onMouseOver(e) {
+  onMouseMove(e) {
     const target = e.target;
 
     if(target.classList.contains("token"))
@@ -187,15 +187,17 @@ class GameManager {
   selectToken(token) {
     const siblings = token.parentElement.children;
 
-    if(token.getAttribute("data-selected") === `${EMPTY}`) {
-      for(let i = 0; i < siblings.length; ++i)
+    if (token.getAttribute("data-selected") === `${EMPTY}`) {
+      for (let i = 0; i < siblings.length; ++i)
         if (Number(siblings[i].getAttribute("data-selected")) === this.currentPicking + 1) {
           siblings[i].setAttribute("data-selected", EMPTY);
           siblings[i].firstElementChild.textContent = "";
+          siblings[i].firstElementChild.classList.add("hidden");
         }
       this.tokens[this.currentPicking] = token.classList.item(2);
       token.setAttribute("data-selected", this.currentPicking + 1);
       token.firstElementChild.textContent = `P${this.currentPicking + 1}`;
+      token.firstElementChild.classList.remove("hidden");
       this.incrementPlayer("picking");
       this.scoreboard.displayScores();
       this.scoreboard.setToken(this.tokens[this.currentPlayer]);
@@ -207,7 +209,8 @@ class GameManager {
     this.currentPicking = 0;
     this.playerCount.count = count;
     this.resetTokens();
-    this.createSelectModal();
+    if(this.scoreboard)
+      this.createSelectModal();
   }
 
   resetTime() {

@@ -3,13 +3,13 @@
   <head>
     <title>Connect</title>
     <link rel="stylesheet" href="./components/css/style.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3.0, minimum-scale=0.86">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
   </head>
-  <body>
+  <body class="background">
     <div class="container popup">
       <div class="row">
         <div class="col">
-          <p class="message">
+          <p class="popup-message">
             <button class="close">&times;</button>
             <span>⚠️</span> To access the selection menu, press any token icon off the game board.
           </p>
@@ -60,13 +60,13 @@
     <div class="container modal hidden" id="winModal">
       <div class="row">
         <div class="col">
-          <p><!-- dynamically populated --></p>
+          <p class="win-message"><!-- dynamically populated --></p>
         </div>
       </div>
       <div class="row">
-        <div class="col">
-          <button type="button" class="reset">Reset Board</button>
+        <div class="col win-buttons">
           <button type="button" class="restart">Restart Game</button>
+          <button type="button" class="reset">Reset Board</button>
         </div>
       </div>
     </div>

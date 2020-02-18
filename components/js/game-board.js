@@ -57,9 +57,7 @@ class GameBoard {
         else if (this.checkStale())
           this.winSequence(true);
         this.incrementPlayer("current");
-        this.hover(x);
-        // primarily for mobile
-        setTimeout(()=>this.unHover(), 1000);
+        this.unHover();
         return true;
       }
       ++y;
@@ -140,7 +138,6 @@ class GameBoard {
 
   hover(x, y = 0) {
     while (this.checkAt(y, x)) {
-      console.log(y);
       if (this.highlight(y, x))
         return true;
       ++y;
@@ -155,9 +152,9 @@ class GameBoard {
 
   resize() {
     const gameBoard = document.querySelector("#gameBoard");
-    const wH = window.innerHeight;
+    const wH = window.innerHeight * 0.75;
     const wW = window.innerWidth;
-    const bSize = (wW < wH ? wW : wH) * 0.75;
+    const bSize = wW < wH ? wW : wH * 0.75;
     let bH;
     let bW;
 
