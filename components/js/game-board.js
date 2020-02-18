@@ -154,7 +154,7 @@ class GameBoard {
     const gameBoard = document.querySelector("#gameBoard");
     const wH = window.innerHeight * 0.75;
     const wW = window.innerWidth;
-    const bSize = wW < wH ? wW : wH;
+    const bSize = wW < wH ? wW : wH * 0.75;
     let bH;
     let bW;
 
