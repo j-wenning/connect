@@ -190,8 +190,23 @@ form {
   background-image: url(../../assets/images/background.jpg);
   background-repeat: no-repeat;
   background-size: cover;
-  box-shadow: inset 0 -50px 50px -50px #ffffff,
-              inset 0 0 1000px 1000px #00000088;
+  box-shadow: inset 0 -50px 50px -50px #ffffff;
+}
+
+.characters {
+  z-index: -1;
+  position: absolute;
+  align-items: flex-end;
+  justify-content: space-between;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #00000055;
+}
+
+.characters img {
+  display: none;
+  height: 35%;
 }
 
 /* new tokens must also be added to main script  */
@@ -299,9 +314,11 @@ form {
   background-color: white;
 }
 
-/* @media only screen and (min-width: 1000px) {
-
-} */
+@media only screen and (min-width: 800px) {
+  .characters img{
+    display: initial;
+  }
+}
 
 .hidden {
   display: none;
