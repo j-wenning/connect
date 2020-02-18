@@ -19,6 +19,7 @@ class GameManager {
     this.setBoardData(6, 7, 4);
     this.setPlayerCount(2);
     this.reset();
+    this.createSelectModal();
 
     setInterval(()=>this.decrementTime(), 10);
 
@@ -57,12 +58,11 @@ class GameManager {
       }
       element = board.appendChild(document.createElement("button"));
       element.classList.add("select", "ui-token", TOKENS[i]);
-      element.setAttribute("data-selected", i < this.playerCount.count ? i + 1 : EMPTY);
+      element.setAttribute("data-selected", EMPTY);
       element.appendChild(document.createElement("span"));
       if(i < this.playerCount.count) {
         data = element.getAttribute("data-selected");
-        if (data !== `${EMPTY}`)
-          element.firstElementChild.textContent = `P${data}`;
+        this.selectToken(element);
       }
     }
   }
@@ -208,7 +208,8 @@ class GameManager {
     this.currentPicking = 0;
     this.playerCount.count = count;
     this.resetTokens();
-    this.createSelectModal();
+    if(this.scoreboard)
+      this.createSelectModal();
   }
 
   resetTime() {

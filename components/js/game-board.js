@@ -152,7 +152,7 @@ class GameBoard {
 
   resize() {
     const gameBoard = document.querySelector("#gameBoard");
-    const wH = window.innerHeight;
+    const wH = window.innerHeight * 0.75;
     const wW = window.innerWidth;
     const bSize = wW < wH ? wW : wH;
     let bH;
