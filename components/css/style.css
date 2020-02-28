@@ -306,8 +306,7 @@ form {
 
 .highlight {
   z-index: 1;
-  box-shadow: 0 0 40px 35px white;
-  background-color: white;
+  background-image: url(../../assets/images/tokens/highlighted-empty-token.png);
 }
 
 @media only screen and (min-width: 800px) {
