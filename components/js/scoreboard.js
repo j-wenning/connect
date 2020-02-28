@@ -52,7 +52,7 @@ class Scoreboard {
       if(time >= 0) {
         displayedTime = time < timeLimit - TIME_OFFSET ?
           time : timeLimit - TIME_OFFSET;
-        span.textContent = `${ Math.floor(displayedTime / 100) }.${ (displayedTime % 100).toString().padStart(2, "0") }s`;
+        span.textContent = (displayedTime/100).toFixed(2) + "s";
       }
     } else span.parentElement.classList.add("hidden");
   }
