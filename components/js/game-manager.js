@@ -75,6 +75,7 @@ class GameManager {
       p.textContent = "GAME OVER";
     else
       p.textContent = `${PLAYERS[this.currentPlayer]} wins!`;
+    this.paused = !this.paused;
   }
 
   toggleSelectModal() {
