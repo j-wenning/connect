@@ -43,9 +43,6 @@ form {
 
 .row {
   margin: 0;
-}
-
-.row {
   padding-top: 2.5%;
 }
 
@@ -101,6 +98,12 @@ form {
   bottom: 0;
   height: initial;
   padding: 0;
+  transition: 0.5s;
+}
+
+.popup.hidden {
+  display: block;
+  transform: translateY(50vh);
 }
 
 .popup-message {
