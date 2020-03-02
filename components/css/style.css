@@ -93,7 +93,7 @@ form {
 }
 
 .popup {
-  z-index: 2;
+  z-index: 4;
   position: fixed;
   bottom: 0;
   height: initial;
