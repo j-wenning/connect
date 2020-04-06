@@ -37,13 +37,13 @@ form {
 .container {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
   height: 100%;
   width: 100%;
 }
 
 .row {
   margin: 0;
+  padding-top: 2.5%;
 }
 
 .col {
@@ -93,10 +93,17 @@ form {
 }
 
 .popup {
-  z-index: 2;
+  z-index: 4;
   position: fixed;
   bottom: 0;
   height: initial;
+  padding: 0;
+  transition: 0.5s;
+}
+
+.popup.hidden {
+  display: block;
+  transform: translateY(50vh);
 }
 
 .popup-message {
@@ -142,7 +149,6 @@ form {
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-around;
-  /* flex-basis: calc(100%/3); */
   max-width: 100px;
   text-align: center;
 }
@@ -155,10 +161,6 @@ form {
   color: white;
   background-color: rgba(0, 0, 0, .45);
   font-weight: bold;
-}
-
-.player .ui-token {
-  width: 50%;
 }
 
 .score,
@@ -197,6 +199,7 @@ form {
   top: 0;
   left: 0;
   width: 100%;
+  padding: 0;
   background-color: rgba(0, 0, 0, .33);
 }
 
@@ -206,7 +209,6 @@ form {
 }
 
 /* new tokens must also be added to main script  */
-#token ,
 .timer{
   width: 50%;
   text-align: center;

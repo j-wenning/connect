@@ -22,6 +22,7 @@ class GameManager {
     this.createSelectModal();
 
     setInterval(()=>this.decrementTime(), 10);
+    setTimeout(()=>this.closePopUp(), 5000);
 
     document.addEventListener("click", e=>this.onClick(e));
     document.addEventListener("mousemove", e=>this.onMouseMove(e));
@@ -84,7 +85,7 @@ class GameManager {
     document.querySelector("#selectModal").classList.toggle("hidden");
   }
 
-  closePopUp(target) {
+  closePopUp(target = document.querySelector(".popup")) {
     let current = target;
 
     while(current && !current.classList.contains("popup"))
