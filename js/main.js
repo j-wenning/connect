@@ -1,3 +1,1 @@
-const App = require("./app");
-
-new App(document.querySelector("game"));
+const app = new App(document.querySelector("#game"));

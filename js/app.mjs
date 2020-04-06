@@ -1,9 +1,6 @@
-const Menu = require('./menu');
-
 class App {
   constructor(root) {
     this.root = root;
+    this.menu = new Menu(root);
   }
 }
-
-module.exports = exports = App;
