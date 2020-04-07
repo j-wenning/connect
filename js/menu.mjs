@@ -1,7 +1,8 @@
 //eslint-disable-next-line no-unused-vars
 class Menu {
-  constructor(root){
+  constructor(root, settings){
     this.root = root;
+    this.settings = settings;
     this.render();
   }
 
@@ -20,7 +21,8 @@ class Menu {
     //eslint-disable-next-line no-undef
     TOKENS.map((token, index)=>{
       cur = cur.appendChild(document.createElement('button'));
-      cur.classList.add('selection-button', index, token);
+      cur.classList.add('selection-button', token);
+      cur.setAttribute('data-index', index)
       cur = cur.parentElement;
     });
     cur = cur.parentElement;
@@ -43,8 +45,8 @@ class Menu {
       { elem: 'button', id: 'create',type: 'submit', textContent: 'submit' }
     ].map(item=>{
       cur = cur.appendChild(document.createElement(item.elem));
-      for(const key in item) {
-        if(key === "textContent") {
+      for (const key in item) {
+        if (key === 'textContent') {
           cur.textContent = item[key];
         }else if (key!=='elem') {
           cur.setAttribute(key, item[key]);
