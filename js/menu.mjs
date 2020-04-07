@@ -1,15 +1,15 @@
 //eslint-disable-next-line no-unused-vars
 class Menu {
-  constructor(root, settings){
+  constructor(root, state) {
     this.root = root;
-    this.settings = settings;
+    this.settings = state;
     this.render();
   }
 
   render() {
-    let cur = document.createElement('div');
+    let cur = this.root.appendChild(document.createElement('div'));
     cur.id = 'menu';
-    this.root.appendChild(cur);
+    cur.classList.add('section');
     cur = cur.appendChild(document.createElement('button'))
     cur.id = 'closeMenuButton';
     cur.classList.add('close-button');
@@ -19,7 +19,7 @@ class Menu {
     cur.id = 'selection';
     cur.classList.add('section');
     //eslint-disable-next-line no-undef
-    TOKENS.map((token, index)=>{
+    TOKENS.forEach((token, index) => {
       cur = cur.appendChild(document.createElement('button'));
       cur.classList.add('selection-button', token);
       cur.setAttribute('data-index', index)
@@ -43,14 +43,11 @@ class Menu {
       { elem: 'input', id: 'winCon', type: 'number'},
       { elem: 'button', id: 'reset', type: 'reset', textContent: 'reset' },
       { elem: 'button', id: 'create',type: 'submit', textContent: 'submit' }
-    ].map(item=>{
+    ].forEach(item => {
       cur = cur.appendChild(document.createElement(item.elem));
       for (const key in item) {
-        if (key === 'textContent') {
-          cur.textContent = item[key];
-        }else if (key!=='elem') {
-          cur.setAttribute(key, item[key]);
-        }
+        if (key === 'textContent') cur.textContent = item[key];
+        else if (key !== 'elem') cur.setAttribute(key, item[key]);
       }
       cur = cur.parentElement;
     })
