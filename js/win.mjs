@@ -7,6 +7,11 @@ class Win {
     this.update(state);
   }
 
+  toggle() {
+    let cur = document.querySelector('#win').parentElement;
+    cur.classList.toggle('closed');
+  }
+
   update(state) {
     const { curPlayer } = state;
     let cur = document.querySelector('#winner');
@@ -18,7 +23,7 @@ class Win {
 
   render() {
     let cur = this.root.appendChild(document.createElement('div'));
-    cur.classList.add('shade');
+    cur.classList.add('shade', 'closed');
     cur = cur.appendChild(document.createElement('div'));
     cur.id = 'win';
     cur.classList.add('section');
