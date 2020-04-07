@@ -1,13 +1,17 @@
-//eslint-disable-next-line no-unused-vars
+// eslint-disable-next-line no-unused-vars
 class Menu {
   constructor(root, state) {
     this.root = root;
-    this.settings = state;
+    this.state = state;
     this.render();
   }
 
+  update() {}
+
   render() {
     let cur = this.root.appendChild(document.createElement('div'));
+    cur.classList.add('shade');
+    cur = cur.appendChild(document.createElement('div'));
     cur.id = 'menu';
     cur.classList.add('section');
     cur = cur.appendChild(document.createElement('button'))
@@ -18,7 +22,7 @@ class Menu {
     cur = cur.appendChild(document.createElement('div'));
     cur.id = 'selection';
     cur.classList.add('section');
-    //eslint-disable-next-line no-undef
+    // eslint-disable-next-line no-undef
     TOKENS.forEach((token, index) => {
       cur = cur.appendChild(document.createElement('button'));
       cur.classList.add('selection-button', token);

@@ -1,4 +1,4 @@
-/*eslint-disable no-unused-vars, no-undef*/
+/* eslint-disable no-unused-vars, no-undef */
 const TOKENS = [
   'fox-token',
   'falco-token',

@@ -1,10 +1,34 @@
-//eslint-disable-next-line no-unused-vars
+// eslint-disable-next-line no-unused-vars
 class Board {
   constructor(root, state) {
-    const { boardX, boardY } = state;
+    const { boardX, boardY, tokens } = state;
     this.root = root;
     this.data = new Array(boardX * boardY).fill(null);
+    this.tokens = tokens;
     this.render(boardX, boardY);
+  }
+
+  updateSlot(index, val) {
+    let cur;
+    if (!isNaN(Number(val))) {
+      cur = document.querySelector(`[data-index="${index}"]`);
+      cur.classList.add(this.tokens[val]);
+      cur.setAttribute('data-value', val);
+    } else if (val === 'hover') {
+      // do hover stuff
+    } else if (val === 'unhover') {
+      // remove hover stuff
+    }
+  }
+
+  update() {
+    let cur = document.getElementsByClassName('slot');
+    [...cur].forEach(val => {
+        if(val.getAttribute('data-value') !== 'null') {
+          cur = val.classList;
+          cur.replace(cur[cur.length - 1], this.tokens[val.getAttribute('data-value')]);
+        }
+    });
   }
 
   render(x, y) {

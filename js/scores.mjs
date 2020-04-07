@@ -1,4 +1,4 @@
-//eslint-disable-next-line no-unused-vars
+// eslint-disable-next-line no-unused-vars
 class Scores {
   constructor(root, state) {
     this.root = root;
@@ -7,8 +7,7 @@ class Scores {
       score: val,
       token: state.tokens[i]
     }));
-    this.curPlayer = null;
-    this.curTime = null;
+    this.curPlayer = this.curTime = null;
     this.render();
     this.update(state.tokens[state.curPlayer], state.curTime);
   }
