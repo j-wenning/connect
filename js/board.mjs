@@ -11,15 +11,18 @@ class Board {
 
   updateSlot(index, val) {
     let cur;
+    if (this.data[index] !== null) return false;
     if (!isNaN(Number(val))) {
       cur = document.querySelector(`[data-index="${index}"]`);
       cur.classList.add(this.tokens[val]);
+      this.data[index] = val;
       cur.setAttribute('data-value', val);
     } else if (val === 'hover') {
       // do hover stuff
     } else if (val === 'unhover') {
       // remove hover stuff
     }
+    return true;
   }
 
   update() {
