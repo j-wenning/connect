@@ -10,10 +10,13 @@ class Board {
   }
 
   updateSlot(index, val) {
+    const { x } = this.ratio;
     let cur;
+    index = index % x;
     if (this.data[index] !== null) return false;
+    while(this.data[index + x] === null) index += x;
     if (!isNaN(Number(val))) {
-      cur = document.querySelector(`[data-index="${index}"]`);
+      cur = document.querySelector(`.slot[data-index="${index}"]`);
       cur.classList.add(this.tokens[val]);
       this.data[index] = val;
       cur.setAttribute('data-value', val);

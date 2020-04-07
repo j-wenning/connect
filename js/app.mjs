@@ -26,7 +26,7 @@ class App {
     e = e.target;
     if (e.id === 'openMenuButton' || e.id === 'closeMenuButton') this.menu.toggle();
     else if (e.classList.contains('slot')) {
-      if (this.board.updateSlot(e.getAttribute('data-index'), this.state.curPlayer)) {
+      if (this.board.updateSlot(Number(e.getAttribute('data-index')), this.state.curPlayer)) {
         // add win condition check
         this.setNextPlayer();
       }
