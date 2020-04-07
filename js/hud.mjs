@@ -30,6 +30,11 @@ class HUD {
     let cur = this.root.appendChild(document.createElement('div'));
     cur.id = 'hud';
     cur.classList.add('section');
+    cur = cur.appendChild(document.createElement('button'));
+    cur.id = 'openMenuButton';
+    cur.classList.add('menu-button');
+    cur.textContent = 'open';
+    cur = cur.parentElement;
     this.players.forEach(val => {
       cur = cur.appendChild(document.createElement('div'));
       cur.id = `score${val.id}`;
