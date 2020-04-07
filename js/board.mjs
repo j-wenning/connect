@@ -5,7 +5,8 @@ class Board {
     this.root = root;
     this.data = new Array(boardX * boardY).fill(null);
     this.tokens = tokens;
-    this.render(boardX, boardY);
+    this.ratio = { x: boardX, y: boardY }
+    this.render();
   }
 
   updateSlot(index, val) {
@@ -31,7 +32,8 @@ class Board {
     });
   }
 
-  render(x, y) {
+  render() {
+    const { x, y } = this.ratio;
     let cur = this.root.appendChild(document.createElement('div'));
     cur.id = 'board';
     cur.classList.add('section');
