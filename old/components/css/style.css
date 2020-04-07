@@ -46,6 +46,10 @@ form {
   padding-top: 2.5%;
 }
 
+.row {
+  padding-top: 2.5%;
+}
+
 .col {
   display: flex;
   flex-wrap: wrap;
