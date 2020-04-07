@@ -45,7 +45,6 @@ class App {
   update(str) {
     str.split(', ')
       .forEach(item => {
-        console.log(item)
         this[item].update(this.state);
       });
   }
