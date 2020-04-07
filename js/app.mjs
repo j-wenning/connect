@@ -20,13 +20,19 @@ class App {
   handleClick(e) {
     e = e.target;
     if (e.id === 'openMenuButton' || e.id === 'closeMenuButton') this.menu.toggle();
+    else if (e.classList.contains('slot')) {
+      this.board.updateSlot(e.getAttribute('data-index'), this.state.curPlayer);
+    }
   }
 
   handleSubmit(e) {
     e.preventDefault();
+    // apply settings from form
   }
 
-  handleMouseover(e) {}
+  handleMouseover(e) {
+    // activate and deactivate hover effects
+  }
 
   update() {
     ('menu, scores, board, win')
