@@ -12,7 +12,21 @@ class App {
     }
     this.menu = this.scores = this.board = this.win = null;
     this.render();
+    document.addEventListener('click', e => this.handleClick(e));
+    document.addEventListener('submit', e => this.handleSubmit(e));
+    document.addEventListener('mouseover', e => this.handleMouseover(e));
   }
+
+  handleClick(e) {
+    e = e.target;
+    if (e.id === 'openMenuButton' || e.id === 'closeMenuButton') this.menu.toggle();
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+  }
+
+  handleMouseover(e) {}
 
   update() {
     ('menu, scores, board, win')
