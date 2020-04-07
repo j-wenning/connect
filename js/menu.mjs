@@ -6,6 +6,11 @@ class Menu {
     this.render();
   }
 
+  toggle() {
+    let cur = document.querySelector('#menu').parentElement;
+    cur.classList.toggle('closed');
+  }
+
   update() {}
 
   render() {
@@ -16,8 +21,8 @@ class Menu {
     cur.classList.add('section');
     cur = cur.appendChild(document.createElement('button'))
     cur.id = 'closeMenuButton';
-    cur.classList.add('close-button');
-    cur.innerHTML = '&times;';
+    cur.classList.add('menu-button');
+    cur.textContent = 'close';
     cur = cur.parentElement;
     cur = cur.appendChild(document.createElement('div'));
     cur.id = 'selection';
