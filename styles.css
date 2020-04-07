@@ -54,3 +54,22 @@
 .bottom.right {
   border-radius: 0 0 15px 0;
 }
+
+.token {
+  background-image: url(./assets/images/tokens/empty-token.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.fox-token { background-image: url(./assets/images/tokens/fox-token.png); }
+
+.falco-token { background-image: url(./assets/images/tokens/falco-token.png); }
+
+.slippy-token { background-image: url(./assets/images/tokens/slippy-token.png); }
+
+.krystal-token { background-image: url(./assets/images/tokens/krystal-token.png); }
+
+.andross-token { background-image: url(./assets/images/tokens/andross-token.png); }
+
+.peppy-token { background-image: url(./assets/images/tokens/peppy-token.png); }

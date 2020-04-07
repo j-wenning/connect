@@ -30,7 +30,7 @@ class Menu {
     // eslint-disable-next-line no-undef
     TOKENS.forEach((token, index) => {
       cur = cur.appendChild(document.createElement('button'));
-      cur.classList.add('selection-button', token);
+      cur.classList.add('selection-button', 'token', token);
       cur.setAttribute('data-index', index)
       cur = cur.parentElement;
     });

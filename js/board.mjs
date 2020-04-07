@@ -41,7 +41,7 @@ class Board {
       cur = cur.appendChild(document.createElement('div'));
       cur.setAttribute('data-index', i);
       cur.setAttribute('data-value', val);
-      cur.classList.add('slot', i % x % 2 ? 'odd' : 'even');
+      cur.classList.add('slot', 'token', i % x % 2 ? 'odd' : 'even');
       if (x === 1 && y === 1) cur.classList.add('around');
       else if (x === 1 || y === 1) {
         if (i === 0) cur.classList.add(x === 1 ? 'top' : 'left');

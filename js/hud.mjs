@@ -46,7 +46,7 @@ class HUD {
       cur.textContent = `[${val.score}]`
       cur = cur.parentElement;
       cur = cur.appendChild(document.createElement('div'));
-      cur.classList.add('score-token', val.token);
+      cur.classList.add('score-token', 'token', val.token);
       cur = cur.parentElement.parentElement;
     });
     cur = cur.appendChild(document.createElement('div'));
@@ -54,7 +54,7 @@ class HUD {
     cur.classList.add('section');
     cur = cur.appendChild(document.createElement('div'));
     cur.id = 'stateToken';
-    cur.classList.add('state-token', this.curPlayer);
+    cur.classList.add('state-token', 'token', this.curPlayer);
     cur = cur.parentElement;
     cur = cur.appendChild(document.createElement('h1'));
     cur.id = 'stateTime';
