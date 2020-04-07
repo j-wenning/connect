@@ -9,18 +9,19 @@ class HUD {
     }));
     this.curPlayer = this.curTime = null;
     this.render();
-    this.update(state.tokens[state.curPlayer], state.curTime);
+    this.update(state);
   }
 
-  update(player, time) {
+  update(state) {
+    const { curPlayer, curTime } = state;
     let cur;
-    if (this.curPlayer !== player) {
-      this.curPlayer = player;
+    if (curPlayer !== this.curPlayer) {
+      this.curPlayer = curPlayer;
       cur = document.querySelector('#stateToken').classList;
-      cur.replace(cur[cur.length - 1], player);
+      cur.replace(cur[cur.length - 1], state.tokens[curPlayer]);
     }
-    if (this.curTime !== time) {
-      this.curTime = time;
+    if (curTime !== this.curTime) {
+      this.curTime = curTime;
       cur = document.querySelector('#stateToken');
       cur.textContent = msToSecStr(this.curTime);
     }

@@ -4,13 +4,14 @@ class Win {
     this.root = root;
     this.curPlayer = null;
     this.render();
-    this.update(state.curPlayer);
+    this.update(state);
   }
 
-  update(player) {
+  update(state) {
+    const { curPlayer } = state;
     let cur = document.querySelector('#winner');
-    if(player !== this.curPlayer) {
-      this.curPlayer = player;
+    if(curPlayer !== this.curPlayer) {
+      this.curPlayer = curPlayer;
       cur.textContent = plrToWinStr(this.curPlayer);
     }
   }
