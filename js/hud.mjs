@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-class Scores {
+class HUD {
   constructor(root, state) {
     this.root = root;
     this.players = state.scores.map((val, i) => ({
@@ -28,7 +28,7 @@ class Scores {
 
   render() {
     let cur = this.root.appendChild(document.createElement('div'));
-    cur.id = 'scores';
+    cur.id = 'hud';
     cur.classList.add('section');
     this.players.forEach(val => {
       cur = cur.appendChild(document.createElement('div'));

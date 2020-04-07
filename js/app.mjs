@@ -26,7 +26,7 @@ class App {
     // eslint-disable-next-line no-undef
     this.menu = new Menu(this.root, this.state);
     // eslint-disable-next-line no-undef
-    this.scores = new Scores(this.root, this.state);
+    this.scores = new HUD(this.root, this.state);
     // eslint-disable-next-line no-undef
     this.board = new Board(this.root, this.state);
     // eslint-disable-next-line no-undef
