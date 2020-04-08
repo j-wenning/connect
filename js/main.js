@@ -7,4 +7,5 @@ const TOKENS = [
   'andross-token',
   'peppy-token'
 ];
+const TIME_OFFSET = 25;
 const app = new App(document.querySelector('#game'));
