@@ -25,10 +25,12 @@ class HUD {
       });
     }
     if (this.tokens.toString() !== state.tokens.toString()) {
-      this.tokens = [...tokens];
       this.tokens.forEach((val, i) => {
-        cur = document.querySelector(`#score${i} div`).classList;
-        cur.replace(cur[cur.length - 1], val);
+        if (val !== tokens[i]) {
+          cur = document.querySelector(`#score${i} div`).classList;
+          cur.replace(cur[cur.length - 1], tokens[i]);
+          return tokens[i];
+        } return val;
       });
     }
     if (curPlayer !== this.curPlayer) {
