@@ -26,20 +26,28 @@ class App {
   handleClick(e) {
     e = e.target;
     if (e.id === 'openMenuButton' || e.id === 'closeMenuButton') this.menu.toggle();
+    else if (e.id === 'newGameButton') {
+      // eslint-disable-next-line no-undef
+      this.board = new Board(this.root, this.state);
+      this.state.curPlayer = 0;
+      this.win.toggle();
+      this.update('hud');
+    }
     else if (e.classList.contains('slot')) {
       const index = Number(e.getAttribute('data-index'));
       switch (this.board.updateSlot(index, this.state.curPlayer)) {
         case 'stalemate':
           this.state.curPlayer = null;
-        // eslint-disable-next-line no-fallthrough
-        case 'win':
           this.update('win');
+          this.win.toggle();
+          break;
+        case 'win':
+          ++this.state.scores[this.state.curPlayer];
+          this.update('win, hud');
           this.win.toggle();
           break;
         case 'next':
           this.setNextPlayer();
-          break;
-        default:
           break;
       }
     }
