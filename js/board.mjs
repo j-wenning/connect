@@ -4,14 +4,16 @@ class Board {
     const { boardX, boardY, tokens } = state;
     this.root = root;
     this.data = new Array(boardX * boardY).fill(null);
-    this.tokens = tokens;
-    this.ratio = { x: boardX, y: boardY }
+    this.tokens = [...tokens];
+    this.board = { x: boardX, y: boardY }
+    this.aspect = { x: null, y: null }
     this.winCon = state.winCon;
     this.render();
+    this.update(state);
   }
 
   checkDir(i1, yDir, xDir) {
-    const { x } = this.ratio;
+    const { x } = this.board;
     const i2 = i1 + xDir + yDir * x;
     const isInBounds = i1 % x + xDir === i2 % x;
     if (isInBounds && !isNaN(this.data[i2]) && this.data[i1] === this.data[i2]) {
@@ -21,7 +23,7 @@ class Board {
   }
 
   checkForWin(index) {
-    const { x } = this.ratio;
+    const { x } = this.board;
     let count = 1; // diagonal
     count += this.checkDir(index, 1, 1);
     count += this.checkDir(index, -1, -1);
@@ -46,7 +48,7 @@ class Board {
   }
 
   updateSlot(index, val) {
-    const { x } = this.ratio;
+    const { x } = this.board;
     let cur;
     index = index % x;
     if (this.data[index] !== null) return false;
@@ -65,18 +67,44 @@ class Board {
     return true;
   }
 
-  update() {
-    let cur = document.getElementsByClassName('slot');
-    [...cur].forEach(val => {
-        if(val.getAttribute('data-value') !== 'null') {
+  update(state) {
+    const { tokens } = state;
+    const { x, y } = this.board;
+    let cur;
+    if (window.innerWidth !== this.aspect.x
+      || window.innerHeight !== this.aspect.y) {
+      cur = document.querySelector('#board');
+      const wH = window.innerHeight * 0.75;
+      const wW = window.innerWidth;
+      const bSize = wW < wH ? wW : wH * 0.75;
+      let bH;
+      let bW;
+      if (x < y) {
+        bH = bSize;
+        bW = (bSize / y) * x;
+      } else {
+        bH = (bSize / x) * y;
+        bW = bSize;
+      }
+      cur.setAttribute('style', `height: ${bH}px; width: ${bW}px;`);
+      this.aspect.x = window.innerWidth;
+      this.aspect.y = window.innerHeight;
+      console.log(cur)
+    }
+    if (tokens.toString() !== this.tokens.toString()) {
+      this.tokens = [...tokens];
+      cur = document.getElementsByClassName('slot');
+      [...cur].forEach(val => {
+        if (val.getAttribute('data-value') !== 'null') {
           cur = val.classList;
           cur.replace(cur[cur.length - 1], this.tokens[val.getAttribute('data-value')]);
         }
-    });
+      });
+    }
   }
 
   render() {
-    const { x, y } = this.ratio;
+    const { x, y } = this.board;
     let cur = document.querySelector('#board');
     if (cur) cur.innerHTML = '';
     else {

@@ -3,11 +3,12 @@ class App {
   constructor(root) {
     this.root = root;
     this.state = {
-      boardX: 6,
-      boardY: 7,
+      boardX: 7,
+      boardY: 6,
       scores: [0, 0],
       tokens: ['fox-token', 'falco-token'],
       curPlayer: 0,
+      maxTime: null,
       curTime: 500,
       winCon: 4
     }
@@ -16,11 +17,24 @@ class App {
     document.addEventListener('click', e => this.handleClick(e));
     document.addEventListener('submit', e => this.handleSubmit(e));
     document.addEventListener('mouseover', e => this.handleMouseover(e));
+    window.addEventListener('resize', () => this.handleResize());
+    setInterval(() => this.onTick(), 10);
   }
 
   setNextPlayer() {
+    // eslint-disable-next-line no-undef
+    this.state.curTime = this.state.maxTime + TIME_OFFSET;
     this.state.curPlayer = (this.state.curPlayer + 1) % this.state.scores.length;
     this.update('hud');
+  }
+
+  onTick() {
+    if (this.state.maxTime !== 0) {
+      // eslint-disable-next-line no-undef
+      if (this.state.curTime >= -TIME_OFFSET * 2) --this.state.curTime;
+      else this.setNextPlayer();
+      this.update('hud');
+    }
   }
 
   handleClick(e) {
@@ -60,6 +74,10 @@ class App {
 
   handleMouseover(e) {
     // activate and deactivate hover effects
+  }
+
+  handleResize() {
+    this.update('board');
   }
 
   update(str) {

@@ -7,10 +7,6 @@
   flex-wrap: wrap;
 }
 
-.slot {
-  height: 15px;
-}
-
 .odd {
   background-color: black;
 }
