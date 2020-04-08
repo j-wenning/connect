@@ -13,7 +13,7 @@ class HUD {
   }
 
   update(state) {
-    const { curPlayer, curTime, scores, tokens } = state;
+    const { curPlayer, maxTime, curTime, scores, tokens } = state;
     let cur;
     if (this.scores.toString() !== scores.toString()) {
       for (let i = 0; i < scores.length; ++i) {
@@ -39,6 +39,7 @@ class HUD {
       cur = document.querySelector('#stateToken').classList;
       cur.replace(cur[cur.length - 1], this.tokens[this.curPlayer]);
     }
+    if (maxTime !== this.maxTime) this.maxTime = maxTime;
     if (curTime !== this.curTime) {
       this.curTime = curTime;
       cur = document.querySelector('#stateTime');
