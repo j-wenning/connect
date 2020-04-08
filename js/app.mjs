@@ -73,7 +73,10 @@ class App {
   }
 
   handleMousemove(e) {
-    // activate and deactivate hover effects
+    e = e.target;
+    if (e.classList.contains('token')) {
+      this.board.updateSlot(Number(e.getAttribute('data-index')), 'highlight');
+    } else this.board.updateSlot(null, null);
   }
 
   handleResize() {
