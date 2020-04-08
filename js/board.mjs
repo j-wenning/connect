@@ -8,6 +8,7 @@ class Board {
     this.board = { x: boardX, y: boardY }
     this.aspect = { x: null, y: null }
     this.winCon = state.winCon;
+    this.highlight = null;
     this.render();
     this.update(state);
   }
@@ -47,22 +48,34 @@ class Board {
     return 'stalemate';
   }
 
-  updateSlot(index, val) {
+  updateSlot(index, val = null) {
     const { x } = this.board;
     let cur;
+    if (index === null) {
+      cur = document.querySelector(`.slot[data-index="${this.highlight}"]`);
+      if (cur) {
+        cur.classList.remove('highlighted-slot');
+        return 'removed';
+      } return false;
+    }
     index = index % x;
     if (this.data[index] !== null) return false;
     while(this.data[index + x] === null) index += x;
-    if (!isNaN(Number(val))) {
-      cur = document.querySelector(`.slot[data-index="${index}"]`);
+    cur = document.querySelector(`.slot[data-index="${index}"]`);
+    if (val === 'highlight') {
+      if (index !== this.highlight) {
+        cur.classList.add('highlighted-slot');
+        cur = document.querySelector(`.slot[data-index="${this.highlight}"]`);
+        if (cur) cur.classList.remove('highlighted-slot');
+        this.highlight = index;
+        return 'highlight';
+      }
+      return false;
+    } else if (!isNaN(Number(val))) {
       cur.classList.add(this.tokens[val]);
       this.data[index] = val;
       cur.setAttribute('data-value', val);
       return this.checkForWin(index);
-    } else if (val === 'hover') {
-      // do hover stuff
-    } else if (val === 'unhover') {
-      // remove hover stuff
     }
     return true;
   }

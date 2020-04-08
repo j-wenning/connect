@@ -62,6 +62,8 @@ body {
   background-size: contain;
 }
 
+.highlighted-slot { background-image: url(./assets/images/tokens/highlighted-slot.png); }
+
 .fox-token { background-image: url(./assets/images/tokens/fox-token.png); }
 
 .falco-token { background-image: url(./assets/images/tokens/falco-token.png); }
@@ -73,5 +75,3 @@ body {
 .andross-token { background-image: url(./assets/images/tokens/andross-token.png); }
 
 .peppy-token { background-image: url(./assets/images/tokens/peppy-token.png); }
-
-.highlighted-slot { background-image: url(./assets/images/tokens/highlighted-slot.png); }
