@@ -89,7 +89,6 @@ class Board {
       cur.setAttribute('style', `height: ${bH}px; width: ${bW}px;`);
       this.aspect.x = window.innerWidth;
       this.aspect.y = window.innerHeight;
-      console.log(cur)
     }
     if (tokens.toString() !== this.tokens.toString()) {
       this.tokens = [...tokens];
