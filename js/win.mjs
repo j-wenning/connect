@@ -15,7 +15,7 @@ class Win {
   update(state) {
     const { curPlayer } = state;
     let cur = document.querySelector('#winner');
-    if(curPlayer !== this.curPlayer) {
+    if (curPlayer !== this.curPlayer) {
       this.curPlayer = curPlayer;
       cur.textContent = plrToWinStr(this.curPlayer);
     }

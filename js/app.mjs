@@ -3,12 +3,13 @@ class App {
   constructor(root) {
     this.root = root;
     this.state = {
-      boardX: 10,
-      boardY: 10,
+      boardX: 6,
+      boardY: 7,
       scores: [0, 0],
       tokens: ['fox-token', 'falco-token'],
       curPlayer: 0,
-      curTime: 500
+      curTime: 500,
+      winCon: 4
     }
     this.menu = this.hud = this.board = this.win = null;
     this.render();
@@ -26,9 +27,20 @@ class App {
     e = e.target;
     if (e.id === 'openMenuButton' || e.id === 'closeMenuButton') this.menu.toggle();
     else if (e.classList.contains('slot')) {
-      if (this.board.updateSlot(Number(e.getAttribute('data-index')), this.state.curPlayer)) {
-        // add win condition check
-        this.setNextPlayer();
+      const index = Number(e.getAttribute('data-index'));
+      switch (this.board.updateSlot(index, this.state.curPlayer)) {
+        case 'stalemate':
+          this.state.curPlayer = null;
+        // eslint-disable-next-line no-fallthrough
+        case 'win':
+          this.update('win');
+          this.win.toggle();
+          break;
+        case 'next':
+          this.setNextPlayer();
+          break;
+        default:
+          break;
       }
     }
   }

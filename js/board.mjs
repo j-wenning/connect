@@ -6,7 +6,43 @@ class Board {
     this.data = new Array(boardX * boardY).fill(null);
     this.tokens = tokens;
     this.ratio = { x: boardX, y: boardY }
+    this.winCon = state.winCon;
     this.render();
+  }
+
+  checkDir(i1, yDir, xDir) {
+    const { x } = this.ratio;
+    const i2 = i1 + xDir + yDir * x;
+    const isInBounds = i1 % x + xDir === i2 % x;
+    if (isInBounds && !isNaN(this.data[i2]) && this.data[i1] === this.data[i2]) {
+      return 1 + this.checkDir(i2, yDir, xDir);
+    }
+    return 0;
+  }
+
+  checkForWin(index) {
+    const { x } = this.ratio;
+    let count = 1; // diagonal
+    count += this.checkDir(index, 1, 1);
+    count += this.checkDir(index, -1, -1);
+    if (count >= this.winCon) return 'win';
+    count = 1; // antidiagonal
+    count += this.checkDir(index, 1, -1);
+    count += this.checkDir(index, -1, 1);
+    if (count >= this.winCon) return 'win';
+    count = 1; // vertical
+    count += this.checkDir(index, 1, 0);
+    count += this.checkDir(index, -1, 0);
+    if (count >= this.winCon) return 'win';
+    count = 1; // horizontal
+    count += this.checkDir(index, 0, -1);
+    count += this.checkDir(index, 0, 1);
+    if (count >= this.winCon) return 'win';
+    // stalemate
+    for (let i = 0; i < x; ++i) {
+      if (this.data[i] === null) return 'next';
+    }
+    return 'stalemate';
   }
 
   updateSlot(index, val) {
@@ -20,6 +56,7 @@ class Board {
       cur.classList.add(this.tokens[val]);
       this.data[index] = val;
       cur.setAttribute('data-value', val);
+      return this.checkForWin(index);
     } else if (val === 'hover') {
       // do hover stuff
     } else if (val === 'unhover') {
