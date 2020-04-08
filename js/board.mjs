@@ -77,9 +77,13 @@ class Board {
 
   render() {
     const { x, y } = this.ratio;
-    let cur = this.root.appendChild(document.createElement('div'));
-    cur.id = 'board';
-    cur.classList.add('section');
+    let cur = document.querySelector('#board');
+    if (cur) cur.innerHTML = '';
+    else {
+      cur = this.root.appendChild(document.createElement('div'));
+      cur.id = 'board';
+      cur.classList.add('section');
+    }
     this.data.forEach((val, i) => {
       cur = cur.appendChild(document.createElement('div'));
       cur.setAttribute('data-index', i);

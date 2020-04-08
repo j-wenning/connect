@@ -14,8 +14,14 @@ class Menu {
   update() {}
 
   render() {
-    let cur = this.root.appendChild(document.createElement('div'));
-    cur.classList.add('shade');
+    let cur = document.querySelector('#menu');
+    if (cur) {
+      cur = cur.parentElement;
+      cur.innerHTML = '';
+    } else {
+      cur = this.root.appendChild(document.createElement('div'));
+      cur.classList.add('shade');
+    }
     cur = cur.appendChild(document.createElement('div'));
     cur.id = 'menu';
     cur.classList.add('section');

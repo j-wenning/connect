@@ -2,7 +2,7 @@
 class Win {
   constructor(root, state) {
     this.root = root;
-    this.curPlayer = null;
+    this.curPlayer = state.curPlayer;
     this.render();
     this.update(state);
   }
@@ -22,8 +22,14 @@ class Win {
   }
 
   render() {
-    let cur = this.root.appendChild(document.createElement('div'));
-    cur.classList.add('shade', 'closed');
+    let cur = document.querySelector('#win');
+    if (cur){
+      cur = cur.parentElement;
+      cur.innerHTML = '';
+    } else {
+      cur = this.root.appendChild(document.createElement('div'));
+      cur.classList.add('shade', 'closed');
+    }
     cur = cur.appendChild(document.createElement('div'));
     cur.id = 'win';
     cur.classList.add('section');
