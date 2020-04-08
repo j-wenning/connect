@@ -52,7 +52,6 @@ class Board {
     const { x } = this.board;
     let cur;
     if (index === null && this.highlight !== null) {
-      console.log('not')
       cur = document.querySelector(`.slot[data-index="${this.highlight}"]`);
       if (cur) {
         cur.classList.remove('highlighted-slot');
