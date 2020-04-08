@@ -1,8 +1,13 @@
 // eslint-disable-next-line no-unused-vars
 class Menu {
   constructor(root, state) {
+    const { boardX, boardY, scores, maxTime, winCon } = state;
     this.root = root;
-    this.state = state;
+    this.boardX = boardX;
+    this.boardY = boardY;
+    this.playerCount = scores.length;
+    this.maxTime = maxTime;
+    this.winCon = winCon;
     this.render();
   }
 
@@ -37,7 +42,10 @@ class Menu {
     TOKENS.forEach((token, index) => {
       cur = cur.appendChild(document.createElement('button'));
       cur.classList.add('selection-button', 'token', token);
-      cur.setAttribute('data-index', index)
+      if (index < this.playerCount) {
+        cur.setAttribute('data-value', index);
+        cur.textContent = 'P' + (index + 1);
+      }
       cur = cur.parentElement;
     });
     cur = cur.parentElement;
