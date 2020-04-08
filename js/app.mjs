@@ -46,8 +46,7 @@ class App {
       this.state.curPlayer = 0;
       this.win.toggle();
       this.update('hud');
-    }
-    else if (e.classList.contains('slot')) {
+    } else if (e.classList.contains('slot')) {
       const index = Number(e.getAttribute('data-index'));
       switch (this.board.updateSlot(index, this.state.curPlayer)) {
         case 'stalemate':
@@ -69,12 +68,11 @@ class App {
 
   handleSubmit(e) {
     e.preventDefault();
-    // apply settings from form
   }
 
   handleMousemove(e) {
     e = e.target;
-    if (e.classList.contains('token')) {
+    if (e.classList.contains('slot')) {
       this.board.updateSlot(Number(e.getAttribute('data-index')), 'highlight');
     } else this.board.updateSlot(null, null);
   }
