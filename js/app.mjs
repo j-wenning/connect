@@ -10,7 +10,8 @@ class App {
       curPlayer: 0,
       maxTime: null,
       curTime: 500,
-      winCon: 4
+      winCon: 4,
+      curSelect: 0
     }
     this.menu = this.hud = this.board = this.win = null;
     this.render();
@@ -38,17 +39,29 @@ class App {
   }
 
   handleClick(e) {
-    e = e.target;
-    if (e.id === 'openMenuButton' || e.id === 'closeMenuButton') this.menu.toggle();
-    else if (e.id === 'newGameButton') {
+    let cur = e.target;
+    if (cur.id === 'openMenuButton' || cur.id === 'closeMenuButton') this.menu.toggle();
+    else if (cur.id === 'newGameButton') {
       // eslint-disable-next-line no-undef
       this.board = new Board(this.root, this.state);
       this.state.curPlayer = 0;
       this.win.toggle();
       this.update('hud');
-    } else if (e.classList.contains('slot')) {
-      const index = Number(e.getAttribute('data-index'));
-      switch (this.board.updateSlot(index, this.state.curPlayer)) {
+    } else if (cur.classList.contains('selection-button')) {
+      const token = cur.classList[cur.classList.length - 1];
+      if (!this.state.tokens.includes(token)) {
+        const old = document.querySelector(`[data-value="${this.state.curSelect}"]`);
+        old.removeAttribute('data-value');
+        cur.setAttribute('data-value', this.state.curSelect);
+        old.textContent = '';
+        cur.textContent = 'P' + (this.state.curSelect + 1);
+        this.state.tokens[this.state.curSelect] = token;
+        this.update('board, hud');
+      }
+      this.state.curSelect = (this.state.curSelect + 1) % this.state.scores.length;
+    } else if (cur.classList.contains('slot')) {
+      cur = Number(cur.getAttribute('data-index'));
+      switch (this.board.updateSlot(cur, this.state.curPlayer)) {
         case 'stalemate':
           this.state.curPlayer = null;
           this.update('win');
