@@ -82,6 +82,11 @@ class App {
 
   handleSubmit(e) {
     e.preventDefault();
+    this.menu.setState(this.state, () => {
+      // eslint-disable-next-line no-undef
+      this.board = new Board(this.root, this.state);
+    });
+    this.update('menu, hud');
   }
 
   handleMousemove(e) {
