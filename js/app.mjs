@@ -18,6 +18,7 @@ class App {
     document.addEventListener('click', e => this.handleClick(e));
     document.addEventListener('submit', e => this.handleSubmit(e));
     document.addEventListener('mousemove', e => this.handleMousemove(e));
+    document.addEventListener('change', e => this.handleChange(e));
     window.addEventListener('resize', () => this.handleResize());
     setInterval(() => this.onTick(), 10);
   }
