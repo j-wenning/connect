@@ -16,10 +16,12 @@ class HUD {
     const { curPlayer, curTime, scores, tokens } = state;
     let cur;
     if (this.scores.toString() !== state.scores.toString()) {
-      this.scores = [...scores];
-      this.scores.forEach((val, i) => {
-        cur = document.querySelector(`#score${i} h2`);
-        cur.textContent = `[${val}]`;
+      this.scores.map((val, i) => {
+        if (val !== scores[i]) {
+          cur = document.querySelector(`#score${i} h2`);
+          cur.textContent = `[${scores[i]}]`;
+          return scores[i];
+        } return val;
       });
     }
     if (this.tokens.toString() !== state.tokens.toString()) {
