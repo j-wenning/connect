@@ -51,10 +51,12 @@ class Board {
   updateSlot(index, val = null) {
     const { x } = this.board;
     let cur;
-    if (index === null) {
+    if (index === null && this.highlight !== null) {
+      console.log('not')
       cur = document.querySelector(`.slot[data-index="${this.highlight}"]`);
       if (cur) {
         cur.classList.remove('highlighted-slot');
+        this.highlight = null;
         return 'removed';
       } return false;
     }
