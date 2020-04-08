@@ -91,6 +91,10 @@ class App {
     } else this.board.updateSlot(null, null);
   }
 
+  handleChange(e) {
+    this.menu.setProp(e.target.id, e.target.value);
+  }
+
   handleResize() {
     this.update('board');
   }
