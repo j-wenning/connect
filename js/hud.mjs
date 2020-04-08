@@ -15,25 +15,26 @@ class HUD {
   update(state) {
     const { curPlayer, curTime, scores, tokens } = state;
     let cur;
-    if (this.scores.toString() !== state.scores.toString()) {
-      this.scores.map((val, i) => {
-        if (val !== scores[i]) {
+    if (this.scores.toString() !== scores.toString()) {
+      for (let i = 0; i < scores.length; ++i) {
+        if (this.scores[i] !== scores[i]) {
           cur = document.querySelector(`#score${i} h2`);
           cur.textContent = `[${scores[i]}]`;
-          return scores[i];
-        } return val;
-      });
+          this.scores[i] = scores[i];
+        }
+      }
     }
-    if (this.tokens.toString() !== state.tokens.toString()) {
-      this.tokens.forEach((val, i) => {
-        if (val !== tokens[i]) {
+    if (this.tokens.toString() !== tokens.toString()) {
+      for (let i = 0; i < tokens.length; ++i) {
+        if (this.tokens[i] !== tokens[i]) {
           cur = document.querySelector(`#score${i} div`).classList;
           cur.replace(cur[cur.length - 1], tokens[i]);
-          return tokens[i];
-        } return val;
-      });
+          this.tokens[i] = tokens[i];
+        }
+      }
+      cur = true;
     }
-    if (curPlayer !== this.curPlayer) {
+    if (curPlayer !== this.curPlayer || cur) {
       this.curPlayer = curPlayer;
       cur = document.querySelector('#stateToken').classList;
       cur.replace(cur[cur.length - 1], this.tokens[this.curPlayer]);
