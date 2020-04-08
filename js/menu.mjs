@@ -5,11 +5,15 @@ class Menu {
     this.root = root;
     this.boardX = boardX;
     this.boardY = boardY;
-    this.playerCount = scores.length;
+    this.players = scores.length;
     this.maxTime = maxTime;
     this.winCon = winCon;
     this.render();
     this.update(state);
+  }
+
+  setProp(prop, val) {
+    this[prop] = val;
   }
 
   toggle() {
@@ -30,13 +34,13 @@ class Menu {
       cur.value = boardY;
       this.boardY = boardY;
     }
-    if (this.playerCount !== scores.length) {
+    if (this.players !== scores.length) {
       cur = document.querySelector('#players');
       cur.value = scores.length;
-      this.playerCount = scores.length;
+      this.players = scores.length;
     }
     if (this.maxTime !== maxTime) {
-      cur = document.querySelector('#timeLimit');
+      cur = document.querySelector('#maxTime');
       cur.value = maxTime;
       this.maxTime = maxTime;
     }
@@ -71,7 +75,7 @@ class Menu {
     TOKENS.forEach((token, index) => {
       cur = cur.appendChild(document.createElement('button'));
       cur.classList.add('selection-button', 'token', token);
-      if (index < this.playerCount) {
+      if (index < this.players) {
         cur.setAttribute('data-value', index);
         cur.textContent = 'P' + (index + 1);
       }
@@ -89,8 +93,8 @@ class Menu {
       { elem: 'input', id: 'boardY', type: 'number', value: this.boardY },
       { elem: 'label', for: 'players', textContent: 'player count' },
       { elem: 'select', id: 'players' },
-      { elem: 'label', for: 'timeLimit', textContent: 'time limit' },
-      { elem: 'input', id: 'timeLimit', type: 'number', value: Number(this.maxTime) },
+      { elem: 'label', for: 'maxTime', textContent: 'time limit' },
+      { elem: 'input', id: 'maxTime', type: 'number', value: Number(this.maxTime) },
       { elem: 'label', for: 'winCon', textContent: 'win condition' },
       { elem: 'input', id: 'winCon', type: 'number', value: this.winCon },
       { elem: 'button', id: 'reset', type: 'reset', textContent: 'reset' },
