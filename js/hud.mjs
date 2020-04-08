@@ -1,9 +1,10 @@
 // eslint-disable-next-line no-unused-vars
 class HUD {
   constructor(root, state) {
-    const { curPlayer, curTime, scores, tokens } = state;
+    const { curPlayer, maxTime, curTime, scores, tokens } = state;
     this.root = root;
     this.curPlayer = curPlayer;
+    this.maxTime = maxTime;
     this.curTime = curTime;
     this.scores = [...scores];
     this.tokens = [...tokens];
@@ -30,14 +31,13 @@ class HUD {
     }
     if (curPlayer !== this.curPlayer) {
       this.curPlayer = curPlayer;
-      console.log(curPlayer)
       cur = document.querySelector('#stateToken').classList;
       cur.replace(cur[cur.length - 1], this.tokens[this.curPlayer]);
     }
     if (curTime !== this.curTime) {
       this.curTime = curTime;
       cur = document.querySelector('#stateTime');
-      cur.textContent = msToSecStr(this.curTime);
+      cur.textContent = msToSecStr(this.curTime, this.maxTime);
     }
   }
 
@@ -78,11 +78,11 @@ class HUD {
     cur = cur.appendChild(document.createElement('h1'));
     cur.id = 'stateTime';
     cur.classList.add('state-time');
-    cur.textContent = msToSecStr(this.curTime);
+    cur.textContent = msToSecStr(this.curTime, this.maxTime);
   }
 }
 
-function msToSecStr(ms) {
-  if (ms === null) return '';
-  return (ms / 100).toFixed(2).replace('.', ':');
+function msToSecStr(ms, min) {
+  if (ms === null || min === null) return '';
+  return (Math.max(0, Math.min(min, ms)) / 100).toFixed(2).replace('.', ':');
 }
