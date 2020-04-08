@@ -73,3 +73,5 @@ body {
 .andross-token { background-image: url(./assets/images/tokens/andross-token.png); }
 
 .peppy-token { background-image: url(./assets/images/tokens/peppy-token.png); }
+
+.highlighted-slot { background-image: url(./assets/images/tokens/highlighted-slot.png); }
