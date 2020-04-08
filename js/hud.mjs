@@ -14,16 +14,6 @@ class HUD {
   update(state) {
     const { curPlayer, curTime, scores, tokens } = state;
     let cur;
-    if (curPlayer !== this.curPlayer) {
-      this.curPlayer = curPlayer;
-      cur = document.querySelector('#stateToken').classList;
-      cur.replace(cur[cur.length - 1], state.tokens[curPlayer]);
-    }
-    if (curTime !== this.curTime) {
-      this.curTime = curTime;
-      cur = document.querySelector('#stateToken');
-      cur.textContent = msToSecStr(this.curTime);
-    }
     if (this.scores.toString() !== state.scores.toString()) {
       this.scores = [...scores];
       this.scores.forEach((val, i) => {
@@ -37,6 +27,17 @@ class HUD {
         cur = document.querySelector(`#score${i} div`).classList;
         cur.replace(cur[cur.length - 1], val);
       });
+    }
+    if (curPlayer !== this.curPlayer) {
+      this.curPlayer = curPlayer;
+      console.log(curPlayer)
+      cur = document.querySelector('#stateToken').classList;
+      cur.replace(cur[cur.length - 1], this.tokens[this.curPlayer]);
+    }
+    if (curTime !== this.curTime) {
+      this.curTime = curTime;
+      cur = document.querySelector('#stateTime');
+      cur.textContent = msToSecStr(this.curTime);
     }
   }
 
@@ -72,7 +73,7 @@ class HUD {
     cur.classList.add('section');
     cur = cur.appendChild(document.createElement('div'));
     cur.id = 'stateToken';
-    cur.classList.add('state-token', 'token', this.curPlayer);
+    cur.classList.add('state-token', 'token', this.tokens[this.curPlayer]);
     cur = cur.parentElement;
     cur = cur.appendChild(document.createElement('h1'));
     cur.id = 'stateTime';
