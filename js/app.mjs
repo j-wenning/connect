@@ -18,7 +18,7 @@ class App {
     document.addEventListener('click', e => this.handleClick(e));
     document.addEventListener('submit', e => this.handleSubmit(e));
     document.addEventListener('mousemove', e => this.handleMousemove(e));
-    document.addEventListener('change', e => this.handleChange(e));
+    document.addEventListener('input', e => this.handleInput(e));
     window.addEventListener('resize', () => this.handleResize());
     setInterval(() => this.onTick(), 10);
   }
@@ -91,7 +91,7 @@ class App {
     } else this.board.updateSlot(null, null);
   }
 
-  handleChange(e) {
+  handleInput(e) {
     this.menu.setProp(e.target.id, e.target.value);
   }
 
