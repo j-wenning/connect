@@ -12,8 +12,33 @@ class Menu {
     this.update(state);
   }
 
+  setState(state, resetBoard) {
+    let isNewSize = false;
+    if (this.boardX !== state.boardX) {
+      state.boardX = this.boardX;
+      isNewSize = true;
+    }
+    if (this.boardY !== state.boardY) {
+      state.boardY = this.boardY;
+      isNewSize = true;
+    }
+    if (this.players !== state.scores.length) state.scores.length = this.players;
+    if (this.maxTime !== state.maxTime) {
+      console.log(this.maxTime)
+      state.maxTime = this.maxTime * 100;
+      state.curTime = this.maxTime * 100;
+    }
+    if (this.winCon !== state.winCon) state.winCon = this.winCon;
+    if (isNewSize) {
+      resetBoard();
+    }
+  }
+
   setProp(prop, val) {
-    this[prop] = val;
+    if (!isNaN(Number(val)) && (val > 0 || prop === 'maxTime')) {
+      this[prop] = Number(val) || null;
+      return true;
+    } return false;
   }
 
   toggle() {
