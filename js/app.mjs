@@ -16,7 +16,7 @@ class App {
     this.render();
     document.addEventListener('click', e => this.handleClick(e));
     document.addEventListener('submit', e => this.handleSubmit(e));
-    document.addEventListener('mouseover', e => this.handleMouseover(e));
+    document.addEventListener('mousemove', e => this.handleMousemove(e));
     window.addEventListener('resize', () => this.handleResize());
     setInterval(() => this.onTick(), 10);
   }
@@ -72,7 +72,7 @@ class App {
     // apply settings from form
   }
 
-  handleMouseover(e) {
+  handleMousemove(e) {
     // activate and deactivate hover effects
   }
 
