@@ -29,7 +29,7 @@ class App {
   }
 
   onTick() {
-    if (this.state.maxTime !== 0) {
+    if (this.state.maxTime !== null) {
       // eslint-disable-next-line no-undef
       if (this.state.curTime >= -TIME_OFFSET * 2) --this.state.curTime;
       else this.setNextPlayer();
