@@ -55,7 +55,7 @@ class App {
         const old = document.querySelector(`[data-value="${this.state.curSelect}"]`);
         old.removeAttribute('data-value');
         cur.setAttribute('data-value', this.state.curSelect);
-        old.textContent = '';
+        old.innerHTML = '&nbsp;&nbsp;';
         cur.textContent = 'P' + (this.state.curSelect + 1);
         this.state.tokens[this.state.curSelect] = token;
         this.update('board, hud');
@@ -94,6 +94,7 @@ class App {
         this.update(str);
       });
     this.update('menu, hud, board');
+    this.state.curSelect = 0;
   }
 
   handleReset(e) {
