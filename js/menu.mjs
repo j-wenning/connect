@@ -24,9 +24,8 @@ class Menu {
     }
     if (this.players !== state.scores.length) state.scores.length = this.players;
     if (this.maxTime !== state.maxTime) {
-      console.log(this.maxTime)
-      state.maxTime = this.maxTime * 100;
-      state.curTime = this.maxTime * 100;
+      state.maxTime = this.maxTime ? this.maxTime * 100 : null;
+      state.curTime = this.maxTime ? this.maxTime * 100 : null;
     }
     if (this.winCon !== state.winCon) state.winCon = this.winCon;
     if (isNewSize) {
