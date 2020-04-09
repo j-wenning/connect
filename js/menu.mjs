@@ -33,7 +33,7 @@ class Menu {
             elem.textContent = 'P' + (index + 1);
           } else {
             elem.removeAttribute('data-value');
-            elem.textContent = '';
+            elem.innerHTML = '&nbsp;&nbsp;'
           }
         });
       // eslint-disable-next-line no-undef
@@ -120,6 +120,8 @@ class Menu {
       if (index < this.players) {
         cur.setAttribute('data-value', index);
         cur.textContent = 'P' + (index + 1);
+      } else {
+        cur.innerHTML = '&nbsp;&nbsp;'
       }
       cur = cur.parentElement;
     });
