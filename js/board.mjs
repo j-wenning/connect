@@ -82,7 +82,7 @@ class Board {
   }
 
   update(state) {
-    const { tokens } = state;
+    const { tokens, winCon } = state;
     const { x, y } = this.board;
     let cur;
     if (window.innerWidth !== this.aspect.x
@@ -114,6 +114,7 @@ class Board {
         }
       });
     }
+    if (this.winCon !== winCon) this.winCon = winCon;
   }
 
   render() {
