@@ -58,7 +58,7 @@ class HUD {
     cur = cur.appendChild(document.createElement('button'));
     cur.id = 'openMenuButton';
     cur.classList.add('menu-button');
-    cur.textContent = 'open';
+    cur.textContent = 'menu';
     cur = cur.parentElement;
     this.scores.forEach((val, i) => {
       cur = cur.appendChild(document.createElement('div'));
