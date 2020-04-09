@@ -83,11 +83,17 @@ class App {
 
   handleSubmit(e) {
     e.preventDefault();
-    this.menu.setState(this.state, () => {
-      // eslint-disable-next-line no-undef
-      this.board = new Board(this.root, this.state);
-    });
-    this.update('menu, hud');
+    this.menu.setState(this.state,
+      () => {
+        // eslint-disable-next-line no-undef
+        this.board = new Board(this.root, this.state);
+      }, () => {
+        // eslint-disable-next-line no-undef
+        this.hud = new HUD(this.root, this.state);
+      }, str => {
+        this.update(str);
+      });
+    this.update('menu, hud, board');
   }
 
   handleReset(e) {
