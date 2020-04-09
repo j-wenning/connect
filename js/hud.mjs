@@ -76,7 +76,6 @@ class HUD {
     });
     cur = cur.appendChild(document.createElement('div'));
     cur.id = 'states';
-    cur.classList.add('section');
     cur = cur.appendChild(document.createElement('div'));
     cur.id = 'stateToken';
     cur.classList.add('state-token', 'token', this.tokens[this.curPlayer]);

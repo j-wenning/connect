@@ -113,7 +113,6 @@ class Menu {
     cur = cur.parentElement;
     cur = cur.appendChild(document.createElement('div'));
     cur.id = 'selection';
-    cur.classList.add('section');
     // eslint-disable-next-line no-undef
     TOKENS.forEach((token, index) => {
       cur = cur.appendChild(document.createElement('button'));
@@ -127,7 +126,6 @@ class Menu {
     cur = cur.parentElement;
     cur = cur.appendChild(document.createElement('div'));
     cur.id = 'settings';
-    cur.classList.add('section');
     cur = cur.appendChild(document.createElement('form'));
     [
       { elem: 'label', for: 'boardX', textContent: 'x' },
