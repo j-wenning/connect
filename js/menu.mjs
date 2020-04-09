@@ -86,7 +86,7 @@ class Menu {
     }
     if (this.maxTime !== maxTime) {
       cur = document.querySelector('#maxTime');
-      cur.value = maxTime;
+      cur.value = Number(maxTime) ? maxTime / 100 : null;
       this.maxTime = maxTime;
     }
     if (this.winCon !== winCon) {
