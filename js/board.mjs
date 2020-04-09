@@ -124,7 +124,6 @@ class Board {
     else {
       cur = this.root.appendChild(document.createElement('div'));
       cur.id = 'board';
-      cur.classList.add('section');
     }
     this.data.forEach((val, i) => {
       cur = cur.appendChild(document.createElement('div'));
