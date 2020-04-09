@@ -9,7 +9,7 @@ class App {
       tokens: ['fox-token', 'falco-token'],
       curPlayer: 0,
       maxTime: null,
-      curTime: 500,
+      curTime: null,
       winCon: 4,
       curSelect: 0
     }
@@ -17,6 +17,7 @@ class App {
     this.render();
     document.addEventListener('click', e => this.handleClick(e));
     document.addEventListener('submit', e => this.handleSubmit(e));
+    document.addEventListener('reset', e => this.handleReset(e));
     document.addEventListener('mousemove', e => this.handleMousemove(e));
     document.addEventListener('input', e => this.handleInput(e));
     window.addEventListener('resize', () => this.handleResize());
@@ -87,6 +88,17 @@ class App {
       this.board = new Board(this.root, this.state);
     });
     this.update('menu, hud');
+  }
+
+  handleReset(e) {
+    e.preventDefault();
+    this.menu.update({
+      boardX: 7,
+      boardY: 6,
+      scores: [0, 0],
+      maxTime: null,
+      winCon: 4
+    });
   }
 
   handleMousemove(e) {
