@@ -130,6 +130,13 @@ class App {
   }
 
   render() {
+    let cur = this.root.appendChild(document.createElement('div'));
+    cur.classList.add('background');
+    cur = cur.appendChild(document.createElement('img'));
+    cur.setAttribute('src', "./assets/images/falco.png");
+    cur = cur.parentElement;
+    cur = cur.appendChild(document.createElement('img'));
+    cur.setAttribute('src', "./assets/images/fox.png");
     // eslint-disable-next-line no-undef
     this.menu = new Menu(this.root, this.state);
     // eslint-disable-next-line no-undef
