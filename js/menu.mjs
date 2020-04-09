@@ -31,8 +31,10 @@ class Menu {
           if (index < state.scores.length) {
             elem.setAttribute('data-value', index)
             elem.textContent = 'P' + (index + 1);
+            elem.classList.add('selected');
           } else {
             elem.removeAttribute('data-value');
+            elem.classList.remove('selected');
             elem.innerHTML = '&nbsp;&nbsp;'
           }
         });
@@ -119,6 +121,7 @@ class Menu {
       cur.classList.add('selection-button', 'token', token);
       if (index < this.players) {
         cur.setAttribute('data-value', index);
+        cur.classList.add('selected');
         cur.textContent = 'P' + (index + 1);
       } else {
         cur.innerHTML = '&nbsp;&nbsp;'
@@ -130,14 +133,14 @@ class Menu {
     cur.id = 'settings';
     cur = cur.appendChild(document.createElement('form'));
     [
-      { elem: 'label', for: 'boardX', textContent: 'x' },
+      { elem: 'label', for: 'boardX', textContent: 'board width' },
       { elem: 'input', id: 'boardX', type: 'number', value: this.boardX },
-      { elem: 'label', for: 'boardY', textContent: 'y' },
+      { elem: 'label', for: 'boardY', textContent: 'board height' },
       { elem: 'input', id: 'boardY', type: 'number', value: this.boardY },
       { elem: 'label', for: 'players', textContent: 'player count' },
       { elem: 'select', id: 'players' },
       { elem: 'label', for: 'maxTime', textContent: 'time limit' },
-      { elem: 'input', id: 'maxTime', type: 'number', value: Number(this.maxTime) },
+      { elem: 'input', id: 'maxTime', type: 'number', value: this.maxTime, placeholder: '(secs)' },
       { elem: 'label', for: 'winCon', textContent: 'win condition' },
       { elem: 'input', id: 'winCon', type: 'number', value: this.winCon },
       { elem: 'button', id: 'reset', type: 'reset', textContent: 'reset' },
@@ -150,6 +153,8 @@ class Menu {
       }
       cur = cur.parentElement;
     });
+    cur = cur.parentElement.appendChild(document.createElement('p'));
+    cur.textContent = 'Enter time limit in seconds, leave empty for no limit.'
     cur = document.querySelector('#players');
     // eslint-disable-next-line no-undef
     for (let i = 2; i <= TOKENS.length; ++i) {
