@@ -12,7 +12,7 @@ class Menu {
     this.update(state);
   }
 
-  setState(state, resetBoard) {
+  setState(state, resetBoard, resetHud, update) {
     let isNewSize = false;
     if (this.boardX !== state.boardX) {
       state.boardX = this.boardX;
@@ -22,7 +22,26 @@ class Menu {
       state.boardY = this.boardY;
       isNewSize = true;
     }
-    if (this.players !== state.scores.length) state.scores.length = this.players;
+    if (this.players !== state.scores.length) {
+      const prevLength = state.scores.length;
+      state.scores.length = this.players;
+      if (prevLength < state.scores.length) state.scores.fill(0, prevLength);
+      [...document.getElementsByClassName('selection-button')]
+        .forEach((elem, index) => {
+          if (index < state.scores.length) {
+            elem.setAttribute('data-value', index)
+            elem.textContent = 'P' + (index + 1);
+          } else {
+            elem.removeAttribute('data-value');
+            elem.textContent = '';
+          }
+        });
+      // eslint-disable-next-line no-undef
+      state.tokens = [...TOKENS];
+      state.tokens.length = state.scores.length;
+      resetHud();
+      update('board');
+    }
     if (this.maxTime !== state.maxTime) {
       state.maxTime = this.maxTime ? this.maxTime * 100 : null;
       state.curTime = this.maxTime ? this.maxTime * 100 : null;
@@ -133,7 +152,7 @@ class Menu {
     });
     cur = document.querySelector('#players');
     // eslint-disable-next-line no-undef
-    for (let i = 2; i < TOKENS.length; ++i) {
+    for (let i = 2; i <= TOKENS.length; ++i) {
       cur = cur.appendChild(document.createElement('option'));
       cur.value = cur.textContent = i;
       cur = cur.parentElement;
