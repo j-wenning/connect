@@ -32,7 +32,7 @@ class Win {
     }
     cur = cur.appendChild(document.createElement('div'));
     cur.id = 'win';
-    cur.classList.add('section');
+    cur.classList.add('overlay');
     cur = cur.appendChild(document.createElement('h1'));
     cur.id = 'winner';
     cur.textContent = plrToWinStr(this.curPlayer);

@@ -105,7 +105,7 @@ class Menu {
     }
     cur = cur.appendChild(document.createElement('div'));
     cur.id = 'menu';
-    cur.classList.add('section');
+    cur.classList.add('overlay');
     cur = cur.appendChild(document.createElement('button'))
     cur.id = 'closeMenuButton';
     cur.classList.add('menu-button');

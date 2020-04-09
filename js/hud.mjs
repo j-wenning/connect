@@ -53,7 +53,7 @@ class HUD {
     else {
       cur = this.root.appendChild(document.createElement('div'));
       cur.id = 'hud';
-      cur.classList.add('section');
+      cur.classList.add('overlay');
     }
     cur = cur.appendChild(document.createElement('button'));
     cur.id = 'openMenuButton';
