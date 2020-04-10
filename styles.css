@@ -275,7 +275,7 @@ p {
   #states.lowered { transform: translate(-50%, 30px); }
 
   .state-token {
-    height: 150px;
+    height: 100px;
   }
 }
 
