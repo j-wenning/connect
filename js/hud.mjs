@@ -25,6 +25,8 @@ class HUD {
       this.curTime = curTime;
       cur = document.querySelector('#stateTime');
       cur.textContent = msToSecStr(this.curTime, this.maxTime);
+      if (cur.textContent === '') cur.parentElement.classList.add('closed');
+      else cur.parentElement.classList.remove('closed');
     }
   }
 
@@ -62,7 +64,10 @@ class HUD {
     cur = cur.appendChild(document.createElement('div'));
     cur.id = 'stateToken';
     cur.classList.add('state-token', 'token', this.tokens[this.curPlayer]);
-    cur = cur.parentElement.appendChild(document.createElement('h1'));
+    cur = cur.parentElement.appendChild(document.createElement('div'));
+    if (this.maxTime === null) cur.classList.add('time', 'closed');
+    else cur.classList.add('time');
+    cur = cur.appendChild(document.createElement('h1'));
     cur.id = 'stateTime';
     cur.classList.add('state-time');
     cur.textContent = msToSecStr(this.curTime, this.maxTime);
