@@ -91,7 +91,7 @@ class Board {
       cur = document.querySelector('#board');
       const wH = window.innerHeight * 0.75;
       const wW = window.innerWidth;
-      const bSize = wW < wH ? wW : wH * 0.75;
+      const bSize = wW < wH ? wW : Math.max(wH, 375) * 0.75;
       let bH;
       let bW;
       if (x < y) {

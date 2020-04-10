@@ -129,6 +129,7 @@ p {
   top: 0;
   left: 50%;
   height: 100vh;
+  min-height: 550px;
   width: 100%;
   transform: translateX(-50%);
 }
@@ -150,6 +151,12 @@ p {
 #game,
 #states {
   align-items: center;
+}
+
+#menu,
+#win {
+  height: unset;
+  min-height: unset;
 }
 
 #win {
