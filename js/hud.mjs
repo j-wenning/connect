@@ -23,6 +23,9 @@ class HUD {
           this.scores[i] = scores[i];
         }
       }
+      cur = document.querySelector('#states');
+      if (this.players > 3) cur.classList.add('lowered');
+      else cur.classList.remove('lowered');
     }
     if (this.tokens.toString() !== tokens.toString()) {
       for (let i = 0; i < tokens.length; ++i) {
