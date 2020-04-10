@@ -170,7 +170,7 @@ p {
 
 #board.lowered { transform: translateY(65px); }
 
-#states.lowered { transform: translateY(25px); }
+#states.lowered { transform: translate(-50%, 25px); }
 
 .overlay { z-index: -1; }
 
@@ -264,6 +264,8 @@ p {
 
 @media only screen and (min-width: 700px) {
   h1 { font-size: 24pt }
+
+  #states.lowered { transform: translate(-50%, 30px); }
 
   .state-token {
     height: 150px;
