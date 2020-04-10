@@ -9,6 +9,7 @@ class Board {
     this.aspect = { x: null, y: null }
     this.winCon = state.winCon;
     this.highlight = null;
+    this.players = state.scores.length;
     this.render();
     this.update(state);
   }
@@ -115,6 +116,12 @@ class Board {
       });
     }
     if (this.winCon !== winCon) this.winCon = winCon;
+    if (this.players !== state.scores.length) {
+      this.players = state.scores.length;
+      cur = document.querySelector('#board');
+      if (this.players > 3) cur.classList.add('lowered');
+      else cur.classList.remove('lowered');
+    }
   }
 
   render() {
