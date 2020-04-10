@@ -152,10 +152,12 @@ p {
   align-items: center;
 }
 
-#menu,
 #win {
-  max-width: 600px;
+  margin-top: 250px;
+  text-align: center;
 }
+
+#menu { max-width: 600px; }
 
 #states {
   position: absolute;
