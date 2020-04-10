@@ -36,8 +36,7 @@ class Win {
     cur = cur.appendChild(document.createElement('h1'));
     cur.id = 'winner';
     cur.textContent = plrToWinStr(this.curPlayer);
-    cur = cur.parentElement;
-    cur = cur.appendChild(document.createElement('button'));
+    cur = cur.parentElement.appendChild(document.createElement('button'));
     cur.id = 'newGameButton';
     cur.textContent = 'new game';
   }
