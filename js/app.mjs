@@ -11,7 +11,8 @@ class App {
       maxTime: null,
       curTime: null,
       winCon: 4,
-      curSelect: 0
+      curSelect: 0,
+      paused: true
     }
     this.menu = this.hud = this.board = this.win = null;
     this.render();
@@ -32,7 +33,7 @@ class App {
   }
 
   onTick() {
-    if (this.state.maxTime !== null) {
+    if (this.state.maxTime !== null && !this.state.paused) {
       // eslint-disable-next-line no-undef
       if (this.state.curTime >= -TIME_OFFSET * 2) --this.state.curTime;
       else this.setNextPlayer();
@@ -42,12 +43,16 @@ class App {
 
   handleClick(e) {
     let cur = e.target;
-    if (cur.id === 'openMenuButton' || cur.id === 'closeMenuButton') this.menu.toggle();
+    if (cur.id === 'openMenuButton' || cur.id === 'closeMenuButton') {
+      this.menu.toggle();
+      this.state.paused = !this.state.paused;
+    }
     else if (cur.id === 'newGameButton') {
       // eslint-disable-next-line no-undef
       this.board = new Board(this.root, this.state);
       this.state.curPlayer = 0;
       this.win.toggle();
+      this.state.paused = !this.state.paused;
       this.update('hud');
     } else if (cur.classList.contains('selection-button')) {
       const token = cur.classList[cur.classList.length - 1];
@@ -70,11 +75,13 @@ class App {
           this.state.curPlayer = null;
           this.update('win');
           this.win.toggle();
+          this.state.paused = !this.state.paused;
           break;
         case 'win':
           ++this.state.scores[this.state.curPlayer];
           this.update('win, hud');
           this.win.toggle();
+          this.state.paused = !this.state.paused;
           break;
         case 'next':
           this.setNextPlayer();
