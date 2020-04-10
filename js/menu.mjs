@@ -55,10 +55,11 @@ class Menu {
   }
 
   setProp(prop, val) {
-    if (!isNaN(Number(val)) && (val > 0 || prop === 'maxTime')) {
-      this[prop] = Number(val) || null;
-      return true;
-    } return false;
+    val = Number(val);
+    if (prop === 'maxTime') val = val ? Math.abs(val) : null;
+    else val = val ? Math.abs(val) : 1;
+    this[prop] = val;
+    document.querySelector(`#${prop}`).value = val;
   }
 
   toggle() {
