@@ -59,28 +59,28 @@ class HUD {
     cur.id = 'openMenuButton';
     cur.classList.add('menu-button');
     cur.textContent = 'menu';
-    cur = cur.parentElement;
+    cur = cur.parentElement.appendChild(document.createElement('div'));
+    cur.id = 'scores';
     this.scores.forEach((val, i) => {
       cur = cur.appendChild(document.createElement('div'));
       cur.id = `score${i}`;
       cur.classList.add('score');
       cur = cur.appendChild(document.createElement('h1'));
       cur.textContent = `Player ${i + 1}`;
-      cur = cur.parentElement;
+      cur = cur.parentElement.appendChild(document.createElement('div'));
+      cur.classList.add('details');
       cur = cur.appendChild(document.createElement('h2'));
       cur.textContent = `[${val}]`
-      cur = cur.parentElement;
-      cur = cur.appendChild(document.createElement('div'));
+      cur = cur.parentElement.appendChild(document.createElement('div'));
       cur.classList.add('score-token', 'token', this.tokens[i]);
-      cur = cur.parentElement.parentElement;
+      cur = cur.parentElement.parentElement.parentElement;
     });
-    cur = cur.appendChild(document.createElement('div'));
+    cur = cur.parentElement.appendChild(document.createElement('div'));
     cur.id = 'states';
     cur = cur.appendChild(document.createElement('div'));
     cur.id = 'stateToken';
     cur.classList.add('state-token', 'token', this.tokens[this.curPlayer]);
-    cur = cur.parentElement;
-    cur = cur.appendChild(document.createElement('h1'));
+    cur = cur.parentElement.appendChild(document.createElement('h1'));
     cur.id = 'stateTime';
     cur.classList.add('state-time');
     cur.textContent = msToSecStr(this.curTime, this.maxTime);
