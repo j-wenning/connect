@@ -1,106 +1,19 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Connect</title>
-    <link rel="stylesheet" href="./components/css/style.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
-  </head>
-  <body class="background">
-    <div class="container characters">
-      <div class="row">
-        <div class="col characters">
-          <img src="./assets/images/falco.png" alt="">
-          <img src="./assets/images/fox.png" alt="">
-        </div>
-      </div>
-    </div>
-    <div class="container popup">
-      <div class="row">
-        <div class="col">
-          <p class="popup-message">
-            <button class="close">&times;</button>
-            <span>&#9888;</span> To access the selection menu, press any token icon off the game board.
-          </p>
-        </div>
-      </div>
-    </div>
-    <div class="container modal" id="selectModal">
-      <div class="row">
-        <div class="col" id="selectTokens">
-          <!-- dynamically populated -->
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <form>
-            <label class="settings-group">
-              Board Size:
-              X <input type="number" name="x" class="setting">
-              Y <input type="number" name="y" class="setting">
-            </label>
-            <label class="settings-group">
-              <select name="players" class="setting" id="players">
-                <!-- dynamicaly populated -->
-              </select> players
-            </label>
-            <label class="settings-group">
-              Time Limit:
-              <input type="number" name="time" class="setting">
-              <br>
-              (in seconds, 0 for no timer)
-            </label>
-            <label class="settings-group">
-              Connect <input type="number" name="win" class="setting"> to win.
-            </label>
-            <button type="submit">Set Board</button>
-            <button type="button" class="reset">Reset Board</button>
-            <button type="button" class="restart">Restart Game</button>
-            <!-- <button type="button" id="closeSelectButton">Return To Game</button> -->
-          </form>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <button type="button" id="closeSelectButton">Return To Game</button>
-        </div>
-      </div>
-    </div>
-    <div class="container modal hidden" id="winModal">
-      <div class="row">
-        <div class="col">
-          <p class="win-message"><!-- dynamically populated --></p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col win-buttons">
-          <button type="button" class="restart">Restart Game</button>
-          <button type="button" class="reset">Reset Board</button>
-        </div>
-      </div>
-    </div>
-    <div class="container game">
-      <div class="row" id="scoreBoardTop">
-        <div class="col">
-          <!-- dynamically populated -->
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <div id="gameBoard">
-            <!-- dynamically populated -->
-          </div>
-        </div>
-      </div>
-      <div class="row" id="scoreBoardBot">
-        <div class="col">
-          <!-- dynamically populated -->
-        </div>
-      </div>
-    </div>
-    <script src="./components/js/scoreboard.js"></script>
-    <script src="./components/js/token.js"></script>
-    <script src="./components/js/game-board.js"></script>
-    <script src="./components/js/game-manager.js"></script>
-    <script src="./components/js/main.js"></script>
-  </body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+  <title>Document</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="./js/win.mjs"></script>
+  <script src="./js/board.mjs"></script>
+  <script src="./js/hud.mjs"></script>
+  <script src="./js/menu.mjs"></script>
+  <script src="./js/app.mjs"></script>
+</head>
+<body>
+  <div id="game"></div>
+
+  <script src="./js/main.js"></script>
+</body>
 </html>
