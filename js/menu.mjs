@@ -112,8 +112,7 @@ class Menu {
     cur.id = 'closeMenuButton';
     cur.classList.add('menu-button');
     cur.textContent = 'close';
-    cur = cur.parentElement;
-    cur = cur.appendChild(document.createElement('div'));
+    cur = cur.parentElement.appendChild(document.createElement('div'));
     cur.id = 'selection';
     // eslint-disable-next-line no-undef
     TOKENS.forEach((token, index) => {
