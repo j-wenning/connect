@@ -13,30 +13,8 @@ class HUD {
   }
 
   update(state) {
-    const { curPlayer, maxTime, curTime, scores, tokens } = state;
+    const { curPlayer, maxTime, curTime } = state;
     let cur;
-    if (this.scores.toString() !== scores.toString()) {
-      for (let i = 0; i < scores.length; ++i) {
-        if (this.scores[i] !== scores[i]) {
-          cur = document.querySelector(`#score${i} h2`);
-          cur.textContent = `[${scores[i]}]`;
-          this.scores[i] = scores[i];
-        }
-      }
-      cur = document.querySelector('#states');
-      if (this.players > 3) cur.classList.add('lowered');
-      else cur.classList.remove('lowered');
-    }
-    if (this.tokens.toString() !== tokens.toString()) {
-      for (let i = 0; i < tokens.length; ++i) {
-        if (this.tokens[i] !== tokens[i]) {
-          cur = document.querySelector(`#score${i} div`).classList;
-          cur.replace(cur[cur.length - 1], tokens[i]);
-          this.tokens[i] = tokens[i];
-        }
-      }
-      cur = true;
-    }
     if (curPlayer !== this.curPlayer || cur) {
       this.curPlayer = curPlayer;
       cur = document.querySelector('#stateToken').classList;
