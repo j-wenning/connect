@@ -58,6 +58,7 @@ class HUD {
     });
     cur = cur.parentElement.appendChild(document.createElement('div'));
     cur.id = 'states';
+    if (this.scores.length > 3) cur.classList.add('lowered');
     cur = cur.appendChild(document.createElement('div'));
     cur.id = 'stateToken';
     cur.classList.add('state-token', 'token', this.tokens[this.curPlayer]);
