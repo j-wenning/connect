@@ -13,8 +13,17 @@ class HUD {
   }
 
   update(state) {
-    const { curPlayer, maxTime, curTime } = state;
+    const { curPlayer, maxTime, curTime, scores } = state;
     let cur;
+    if (this.scores.toString() !== scores.toString()) {
+      for (let i = 0; i < scores.length; ++i) {
+        if (this.scores[i] !== scores[i]) {
+          cur = document.querySelector(`#score${i} h2`);
+          cur.textContent = `[${scores[i]}]`;
+          this.scores[i] = scores[i];
+        }
+      }
+    }
     if (curPlayer !== this.curPlayer || cur) {
       this.curPlayer = curPlayer;
       cur = document.querySelector('#stateToken').classList;
