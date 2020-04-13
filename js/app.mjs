@@ -56,13 +56,13 @@ class App {
       this.update('hud');
     } else if (cur.classList.contains('selection-button')) {
       const token = cur.classList[cur.classList.length - 1];
-      if (!this.state.tokens.includes(token)) {
+      if (cur.getAttribute('data-value') === null) {
         const old = document.querySelector(`[data-value="${this.state.curSelect}"]`);
-        old.removeAttribute('data-value');
+        if (old) old.removeAttribute('data-value');
         cur.setAttribute('data-value', this.state.curSelect);
-        old.classList.remove('selected');
+        if (old) old.classList.remove('selected');
         cur.classList.add('selected');
-        old.innerHTML = '&nbsp;&nbsp;';
+        if (old) old.innerHTML = '&nbsp;&nbsp;';
         cur.textContent = 'P' + (this.state.curSelect + 1);
         this.state.tokens[this.state.curSelect] = token;
         this.update('board, hud');
