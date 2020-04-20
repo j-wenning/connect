@@ -144,7 +144,7 @@ class Menu {
       { elem: 'label', for: 'winCon', textContent: 'win condition' },
       { elem: 'input', id: 'winCon', type: 'number', value: this.winCon },
       { elem: 'button', id: 'reset', type: 'reset', textContent: 'reset' },
-      { elem: 'button', id: 'create',type: 'submit', textContent: 'submit' }
+      { elem: 'button', id: 'submit',type: 'submit', textContent: 'submit' }
     ].forEach(item => {
       cur = cur.appendChild(document.createElement(item.elem));
       for (const key in item) {
