@@ -12,7 +12,7 @@ class Menu {
     this.update(state);
   }
 
-  setState(state, resetBoard, resetHud, update) {
+  setState(state, resetBoard, resetHud) {
     let isNewSize = false;
     if (this.boardX !== state.boardX) {
       state.boardX = this.boardX;
@@ -25,7 +25,10 @@ class Menu {
     if (this.players !== state.scores.length) {
       const prevLength = state.scores.length;
       state.scores.length = this.players;
-      if (prevLength < state.scores.length) state.scores.fill(0, prevLength);
+      if (prevLength < state.scores.length) {
+        state.scores.fill(0, prevLength);
+        if (state.curPlayer >= state.scores.length) state.curPlayer = 0;
+      }
       [...document.getElementsByClassName('selection-button')]
         .forEach((elem, index) => {
           if (index < state.scores.length) {
@@ -42,7 +45,6 @@ class Menu {
       state.tokens = [...TOKENS];
       state.tokens.length = state.scores.length;
       resetHud();
-      update('board');
     }
     if (this.maxTime !== state.maxTime) {
       state.maxTime = this.maxTime ? this.maxTime * 100 : null;
