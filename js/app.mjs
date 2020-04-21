@@ -93,15 +93,11 @@ class App {
   handleSubmit(e) {
     e.preventDefault();
     this.menu.setState(this.state,
-      () => {
-        // eslint-disable-next-line no-undef
-        this.board = new Board(this.root, this.state);
-      }, () => {
-        // eslint-disable-next-line no-undef
-        this.hud = new HUD(this.root, this.state);
-      }, str => {
-        this.update(str);
-      });
+      // eslint-disable-next-line no-undef
+      () => { this.board = new Board(this.root, this.state); },
+      // eslint-disable-next-line no-undef
+      () => { this.hud = new HUD(this.root, this.state); }
+    );
     this.update('menu, hud, board');
     this.state.curSelect = 0;
     this.menu.toggle();
@@ -127,6 +123,19 @@ class App {
 
   handleInput(e) {
     this.menu.setProp(e.target.id, e.target.value);
+    if (e.target.id === 'players') {
+      if(this.state.scores.length < e.target.value) {
+        this.state.scores.concat(new Array(e.target.value - this.state.scores.length));
+      } else this.state.scores.splice(e.target.value - 1);
+      this.menu.setState(
+        this.state,
+        // eslint-disable-next-line no-undef
+        () => { this.board = new Board(this.root, this.state); },
+        // eslint-disable-next-line no-undef
+        () => { this.hud = new HUD(this.root, this.state); }
+      );
+      this.update('board');
+    }
   }
 
   handleResize() {
