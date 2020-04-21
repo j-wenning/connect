@@ -82,6 +82,41 @@ class Board {
     return true;
   }
 
+  clearSlots(players) {
+    const { x } = this.board;
+    const start = this.data.length - x;
+    let cur;
+    let swapVal1;
+    let swapVal2;
+    for (let col = start; col < this.data.length; ++col) {
+      for (let i = col; i >= 0; i -= x) {
+        if (this.data[i] >= players) {
+          this.data[i] = null;
+          cur = document.querySelector(`.slot[data-index="${i}"]`);
+          cur.setAttribute('data-value', null);
+          cur = cur.classList;
+          cur.remove(cur[cur.length - 1]);
+        }
+        if (this.data[i] !== null) {
+          cur = i;
+          while (i + x < this.data.length && this.data[i + x] === null) i += x;
+          if (cur !== i) {
+            [this.data[cur], this.data[i]] = [this.data[i], this.data[cur]];
+            cur = document.querySelector(`.slot[data-index="${cur}"]`);
+            swapVal2 = cur.getAttribute('data-value');
+            cur.setAttribute('data-value', null);
+            cur = cur.classList;
+            swapVal1 = cur[cur.length - 1];
+            cur.remove(swapVal1);
+            cur = document.querySelector(`.slot[data-index="${i}"]`);
+            cur.setAttribute('data-value', swapVal2);
+            cur.classList.add(swapVal1);
+          }
+        }
+      }
+    }
+  }
+
   update(state) {
     const { tokens, winCon } = state;
     const { x, y } = this.board;
@@ -117,6 +152,9 @@ class Board {
     }
     if (this.winCon !== winCon) this.winCon = winCon;
     if (this.players !== state.scores.length) {
+      if (this.players > state.scores.length) {
+        this.clearSlots(state.scores.length);
+      }
       this.players = state.scores.length;
       cur = document.querySelector('#board');
       if (this.players > 3) cur.classList.add('lowered');
