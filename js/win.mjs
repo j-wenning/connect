@@ -43,6 +43,6 @@ class Win {
 }
 
 function plrToWinStr(player) {
-  if (player === null) return "Game Over.";
+  if (player === null) return "Draw!";
   return `Player ${player + 1} Wins!`;
 }
