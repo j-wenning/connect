@@ -27,8 +27,7 @@ class Menu {
       state.scores.length = this.players;
       if (prevLength < state.scores.length) {
         state.scores.fill(0, prevLength);
-        if (state.curPlayer >= state.scores.length) state.curPlayer = 0;
-      }
+      } else if (state.curPlayer >= state.scores.length) state.curPlayer = 0;
       [...document.getElementsByClassName('selection-button')]
         .forEach((elem, index) => {
           if (index < state.scores.length) {
