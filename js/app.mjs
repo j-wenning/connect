@@ -101,6 +101,7 @@ class App {
     this.update('menu, hud, board');
     this.state.curSelect = 0;
     this.menu.toggle();
+    this.state.paused = !this.state.paused;
   }
 
   handleReset(e) {
